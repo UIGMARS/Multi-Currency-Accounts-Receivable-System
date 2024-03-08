@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block breadcrumb %}
+    {% comment %} <li class="breadcrumb-item"><a href="{% url 'debtor_list' %}">Debtors</a></li> {% endcomment %}
+    {% comment %} <li class="breadcrumb-item"><a href="{% url 'debtor_detail' debtor.id %}">Debtor Details</a></li> {% endcomment %}
+    <li class="breadcrumb-item active">Add Payment</li>
+{% endblock breadcrumb %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="animated fade-in">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>Add Payment</strong>
+                        </div>
+                        <div class="card-body">
+                            <form method="post">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

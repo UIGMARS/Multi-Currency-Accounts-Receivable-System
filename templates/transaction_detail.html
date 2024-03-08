@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block breadcrumb %}
+    {% comment %} <li class="breadcrumb-item"><a href="{% url 'debtor_list' %}">Debtors</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'debtor_detail' debtor.id %}">Debtor Details</a></li> {% endcomment %}
+    <li class="breadcrumb-item active">Transaction Details</li>
+{% endblock breadcrumb %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="animated fade-in">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>Transaction Details</strong>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Transaction ID:</strong> {{ transaction.transaction_id }}</p>
+                            <p><strong>Date:</strong> {{ transaction.date }}</p>
+                            <p><strong>Debtor:</strong> {{ transaction.debtor }}</p>
+                            <p><strong>Amount:</strong> {{ transaction.amount }}</p>
+                            <p><strong>Currency:</strong> {{ transaction.currency }}</p>
+                            <p><strong>Payment ID:</strong> {{ transaction.payment.id }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

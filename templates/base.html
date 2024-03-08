@@ -1,0 +1,62 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>UIG Finance Manager</title>
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
+  <link href="{% static 'static/css/simple-line-icons.min.css' %}" rel="stylesheet">
+
+  <!-- Main styles for this application -->
+  <link href="{% static 'static/css/style.css' %}" rel="stylesheet">
+</head>
+
+<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
+
+  <header class="app-header navbar">
+    <!-- Header content goes here -->
+  </header>
+
+  <div class="app-body">
+    <div class="sidebar">
+      <!-- Sidebar content goes here -->
+    </div>
+
+    <main class="main">
+      <!-- Breadcrumb -->
+      <ol class="breadcrumb">
+        {% block breadcrumb %}
+        <!-- Breadcrumb items go here -->
+        {% endblock %}
+      </ol>
+
+      {% block content %}
+      <!-- Main content goes here -->
+      {% endblock %}
+    </main>
+
+    <aside class="aside-menu">
+      <!-- Aside menu content goes here -->
+    </aside>
+
+  </div>
+
+  <footer class="app-footer">
+    <!-- Footer content goes here -->
+  </footer>
+
+  <!-- Bootstrap and necessary plugins -->
+  <script src="{% static 'static/vendors/js/jquery.min.js' %}"></script>
+  <script src="{% static 'static/vendors/js/popper.min.js' %}"></script>
+  <script src="{% static 'static/vendors/js/bootstrap.min.js' %}"></script>
+  <!-- BaseUI main scripts -->
+  <script src="{% static 'static/js/app.js' %}"></script>
+  <!-- Custom scripts required by this view -->
+  <script src="{% static 'static/js/main.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item">Debtors</li>
+{% endblock breadcrumb %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="animated fade-in">
+            <div class="row">
+                <table class="table table-responsive-sm table-hover table-outline mb-5">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="text-center"><i class="fa fa-users"></i></th>
+                            <th>Name</th>
+                            <th>Contact Details</th>
+                            <th>Outstanding Balance</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for debtor in debtors %}
+                            <tr>
+                                <td class="text-center">
+                                    <div class="avatar">
+                                        <i class="fa fa-user fa-2x"></i>
+                                    </div>
+                                </td>
+                                <td>{{ debtor.name }}</td>
+                                <td>
+                                    <ul>
+                                        <li>Phone: {{ debtor.phone }}</li>
+                                        <li>Email: {{ debtor.email }}</li>
+                                        <li>Address: {{ debtor.address }}</li>
+                                    </ul>
+                                </td>
+                                <td>{{ debtor.outstanding_balance }}</td>
+                                <td>
+                                    <a href="{% url 'debtor_detail' debtor.id %}" class="btn btn-sm btn-primary">View Details</a>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="5">No debtors found.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
