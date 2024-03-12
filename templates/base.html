@@ -20,47 +20,61 @@
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
-<div class="container"
-  <header class="app-header navbar">
-    <!-- Header content goes here -->
-    <h1 class="navbar-brand mb-0">UIG Finance Manager</h1>
-  </header>
+  <div class="container">
+    <header class="app-header navbar navbar-dark bg-primary">
+      <button class="navbar-toggler d-lg-none" type="button" data-toggle="sidebar-show">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <h1 class="navbar-brand mb-0">UIG Finance Manager</h1>
+    </header>
 
-  <div class="app-body">
-    <div class="sidebar">
-      <!-- Sidebar content goes here -->
-      <p>Sidebar content goes here</p>
+    <div class="app-body">
+      <div class="sidebar">
+        <!-- Sidebar content goes here -->
+        {% comment %} <p>Sidebar content goes here</p> {% endcomment %}
+      </div>
+
+      <main class="main">
+        <!-- Breadcrumb -->
+        <ol class="breadcrumb">
+          {% block breadcrumb %}
+          <!-- Breadcrumb items go here -->
+          {% endblock %}
+        </ol>
+
+        {% block content %}
+        <!-- Main content goes here -->
+        {% endblock %}
+      </main>
+
     </div>
 
-    <main class="main">
-      <!-- Breadcrumb -->
-      <ol class="breadcrumb">
-        {% block breadcrumb %}
-        <!-- Breadcrumb items go here -->
-        {% endblock %}
-      </ol>
+    <footer class="app-footer">
+      <!-- Footer content goes here -->
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <p>&copy; {{ year }} UIG. All rights reserved.</p>
+          </div>
+          <div class="col-md-6 text-end">
+            <p>Developed by JPJ Developers</p>
+          </div>
+        </div>
+      </div>
+    </footer>
 
-      {% block content %}
-      <!-- Main content goes here -->
-      {% endblock %}
-    </main>
+    <!-- Bootstrap and necessary plugins -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+    
+    <!-- AdminLTE main scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js"></script>
 
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <!-- FontAwesome JavaScript -->
+    <script src="https://kit.fontawesome.com/9c2a40def3.js" crossorigin="anonymous"></script>
   </div>
-
-  <footer class="app-footer">
-    <!-- Footer content goes here -->
-    <p>Footer content goes here</p>
-  </footer>
-
-  <!-- Bootstrap and necessary plugins -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
-  
-  <!-- AdminLTE main scripts -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js"></script>
-
-  <!-- Bootstrap JavaScript -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</div>
 </body>
 </html>
