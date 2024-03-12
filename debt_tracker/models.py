@@ -9,7 +9,8 @@ class Debtor(models.Model):
 
     def get_remaining_balance(self):
         payments_total = sum(payment.amount for payment in self.payment_set.all())
-        return self.standing_debts - payments_total
+        return payments_total
+
 
 class Payment(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)

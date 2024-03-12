@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'payment_list' %}">Payment List</a></li>
+    <li class="breadcrumb-item">Payments</li>
+{% endblock breadcrumb %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="animated fade-in">
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <a href="{% url 'index' %}" class="btn btn-primary">
+                        <i class="fas fa-plus-circle"></i> Add New Payment
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <table class="table table-responsive-sm table-hover table-outline mb-5">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="text-center"><i class="fas fa-money-bill-alt"></i></th>
+                            <th>Amount</th>
+                            <th>Currency</th>
+                            <th>Date</th>
+                            <th>Debtor</th>
+                            <th>Transaction ID</th>
+                            <th>Additional Information</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for payment in payments %}
+                            <tr>
+                                <td class="text-center">
+                                    <div class="avatar">
+                                        <i class="fas fa-money-bill-alt fa-2x"></i>
+                                    </div>
+                                </td>
+                                <td>{{ payment.amount }}</td>
+                                <td>{{ payment.currency }}</td>
+                                <td>{{ payment.date }}</td>
+                                <td>{{ payment.debtor }}</td>
+                                <td>{{ payment.transaction_id }}</td>
+                                <td>{{ payment.additional_information }}</td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="7">No payments found.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

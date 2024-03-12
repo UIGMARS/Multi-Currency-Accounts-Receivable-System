@@ -2,7 +2,9 @@
 {% load static %}
 
 {% block breadcrumb %}
-    {% comment %} <li class="breadcrumb-item"><a href="{% url 'debtor_list' %}">Debtors</a></li> {% endcomment %}
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'debtor_list' %}">Debtors</a></li>
     <li class="breadcrumb-item active">Debtor Details</li>
 {% endblock breadcrumb %}
 
@@ -11,16 +13,42 @@
         <div class="animated fade-in">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="card">
+                    <div class="card mb-3">
                         <div class="card-header">
                             <strong>Debtor Information</strong>
                         </div>
                         <div class="card-body">
-                            <p><strong>Name:</strong> {{ debtor.name }}</p>
-                            <p><strong>Phone:</strong> {{ debtor.phone }}</p>
-                            <p><strong>Email:</strong> {{ debtor.email }}</p>
-                            <p><strong>Address:</strong> {{ debtor.address }}</p>
-                            <p><strong>Outstanding Balance:</strong> {{ debtor.outstanding_balance }}</p>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>Name</th>
+                                        <td>{{ debtor.name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Phone</th>
+                                        <td>{{ debtor.phone }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Email</th>
+                                        <td>{{ debtor.email }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Address</th>
+                                        <td>{{ debtor.address }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Outstanding Balance</th>
+                                        <td>
+                                            <span id="outstanding-balance">{{ debtor.get_remaining_balance }}</span>
+                                            <input type="number" id="new-balance-input" class="form-control d-none">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                            <button id="edit-balance-btn" class="btn btn-primary">Set New Outstanding Balance</button>
+                            <button id="save-balance-btn" class="btn btn-success d-none">OK</button>
                         </div>
                     </div>
                 </div>
@@ -58,4 +86,48 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const editBalanceBtn = document.getElementById('edit-balance-btn');
+            const saveBalanceBtn = document.getElementById('save-balance-btn');
+            const balanceSpan = document.getElementById('outstanding-balance');
+            const balanceInput = document.getElementById('new-balance-input');
+            const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+        
+            editBalanceBtn.addEventListener('click', function () {
+                balanceSpan.classList.add('d-none');
+                balanceInput.classList.remove('d-none');
+                saveBalanceBtn.classList.remove('d-none');
+                editBalanceBtn.disabled = true; // Disable the edit button
+            });
+        
+            saveBalanceBtn.addEventListener('click', function () {
+                const newBalance = balanceInput.value;
+                
+                // Make AJAX request to update the balance
+                fetch('/update_balance/', {
+                    method: 'POST',
+                    body: JSON.stringify({ new_balance: newBalance }),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken  // Include CSRF token in the request headers
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    balanceSpan.innerText = data.updated_balance;
+                    balanceInput.value = '';
+                    balanceSpan.classList.remove('d-none');
+                    balanceInput.classList.add('d-none');
+                    saveBalanceBtn.classList.add('d-none');
+                    editBalanceBtn.disabled = false; // Enable the edit button after saving
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+        
+    </script>
 {% endblock %}

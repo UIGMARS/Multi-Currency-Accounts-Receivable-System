@@ -2,12 +2,20 @@
 {% load static %}
 
 {% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
     <li class="breadcrumb-item">Debtors</li>
 {% endblock breadcrumb %}
 
 {% block content %}
     <div class="container-fluid">
         <div class="animated fade-in">
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <a href="{% url 'index' %}" class="btn btn-primary">
+                        <i class="fas fa-plus-circle"></i> Add New Debtor
+                    </a>
+            </div>
             <div class="row">
                 <table class="table table-responsive-sm table-hover table-outline mb-5">
                     <thead class="thead-light">
@@ -37,7 +45,7 @@
                                 </td>
                                 <td>{{ debtor.outstanding_balance }}</td>
                                 <td>
-                                    <a href="{% url 'debtor_detail' debtor.id %}" class="btn btn-sm btn-primary">View Details</a>
+                                    <a href="{% url 'debtor_detail' unique_id=debtor.unique_id %}" class="btn btn-sm btn-primary">View Details</a>
                                 </td>
                             </tr>
                         {% empty %}

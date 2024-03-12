@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 
 {% block breadcrumb %}
-    <li class="breadcrumb-item"><strong>Dashboard</strong></li>
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+    <li class="breadcrumb-item">Dashboard</li>
 {% endblock breadcrumb %}
 
 {% block content %}
@@ -21,9 +22,11 @@
                         <p class="card-text small font-weight-bold">Total Number of Debtors</p>
                         <i class="fas fa-users fa-2x float-right"></i>
                     </div>
-                    <div class="card-footer bg-primary-light">
-                        More info <i class="fas fa-chevron-circle-right float-right"></i>
-                    </div>
+                    <a href="{% url 'debtor_list' %}" class="text-decoration-none">
+                        <div class="card-footer bg-primary-light">
+                            More info <i class="fas fa-chevron-circle-right float-right"></i>
+                        </div>
+                    </a>
                 </div>
             </div>
             <div class="col-md-3">
@@ -33,9 +36,11 @@
                         <p class="card-text small font-weight-bold">Total Outstanding Debt</p>
                         <i class="fas fa-money-bill-wave fa-2x float-right"></i>
                     </div>
-                    <div class="card-footer bg-info-light">
-                        More info <i class="fas fa-chevron-circle-right float-right"></i>
-                    </div>
+                    <a href="{% url 'debtor_list' %}" class="text-decoration-none">
+                        <div class="card-footer bg-info-light">
+                            More info <i class="fas fa-chevron-circle-right float-right"></i>
+                        </div>
+                    </a>
                 </div>
             </div>
             <div class="col-md-3">
@@ -45,9 +50,11 @@
                         <p class="card-text small font-weight-bold">Total Number of Payments</p>
                         <i class="fas fa-chart-line fa-2x float-right"></i>
                     </div>
-                    <div class="card-footer bg-success-light">
-                        More info <i class="fas fa-chevron-circle-right float-right"></i>
-                    </div>
+                    <a href="{% url 'payment_list' %}" class="text-decoration-none">
+                        <div class="card-footer bg-success-light">
+                            More info <i class="fas fa-chevron-circle-right float-right"></i>
+                        </div>
+                    </a>
                 </div>
             </div>
             <div class="col-md-3">
@@ -57,9 +64,11 @@
                         <p class="card-text small font-weight-bold">Total Payments Collected</p>
                         <i class="fas fa-coins fa-2x float-right"></i>
                     </div>
-                    <div class="card-footer bg-warning-light">
-                        More info <i class="fas fa-chevron-circle-right float-right"></i>
-                    </div>
+                    <a href="{% url 'payment_list' %}" class="text-decoration-none">
+                        <div class="card-footer bg-warning-light">
+                            More info <i class="fas fa-chevron-circle-right float-right"></i>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>

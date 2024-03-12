@@ -2,8 +2,9 @@
 {% load static %}
 
 {% block breadcrumb %}
-    {% comment %} <li class="breadcrumb-item"><a href="{% url 'debtor_list' %}">Debtors</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'debtor_detail' debtor.id %}">Debtor Details</a></li> {% endcomment %}
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'transaction_list' %}">Transactions</a></li>
     <li class="breadcrumb-item active">Transaction Details</li>
 {% endblock breadcrumb %}
 
