@@ -15,6 +15,7 @@
                     <a href="{% url 'index' %}" class="btn btn-primary">
                         <i class="fas fa-plus-circle"></i> Add New Debtor
                     </a>
+                </div>
             </div>
             <div class="row">
                 <table class="table table-responsive-sm table-hover table-outline mb-5">
@@ -45,7 +46,15 @@
                                 </td>
                                 <td>{{ debtor.outstanding_balance }}</td>
                                 <td>
-                                    <a href="{% url 'debtor_detail' unique_id=debtor.unique_id %}" class="btn btn-sm btn-primary">View Details</a>
+                                    <a href="{% url 'debtor_detail' unique_id=debtor.unique_id %}" class="btn btn-sm btn-primary mr-2">
+                                        <i class="fas fa-eye"></i> <!-- View Details icon -->
+                                    </a>
+                                    <button class="btn btn-sm btn-info mr-2">
+                                        <i class="fas fa-pencil-alt"></i> <!-- Edit icon -->
+                                    </button>
+                                    <button class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash"></i> <!-- Delete icon -->
+                                    </button>
                                 </td>
                             </tr>
                         {% empty %}

@@ -29,6 +29,7 @@
                             <th>Debtor</th>
                             <th>Transaction ID</th>
                             <th>Additional Information</th>
+                            <th>Actions</th>  <!-- New column for actions -->
                         </tr>
                     </thead>
                     <tbody>
@@ -45,10 +46,21 @@
                                 <td>{{ payment.debtor }}</td>
                                 <td>{{ payment.transaction_id }}</td>
                                 <td>{{ payment.additional_information }}</td>
+                                <td>  <!-- Actions column -->
+                                    <a href="{% url 'index' %}" class="btn btn-info btn-sm">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="{% url 'index' %}" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="{% url 'index' %}" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </td>
                             </tr>
                         {% empty %}
                             <tr>
-                                <td colspan="7">No payments found.</td>
+                                <td colspan="8">No payments found.</td>
                             </tr>
                         {% endfor %}
                     </tbody>

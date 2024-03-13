@@ -3,7 +3,7 @@
 
 {% block breadcrumb %}
     <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
-    <li class="breadcrumb-item">Payments</li>
+    <li class="breadcrumb-item">Transactions</li>
 {% endblock breadcrumb %}
 
 {% block content %}
@@ -21,32 +21,44 @@
                     <thead class="thead-light">
                         <tr>
                             <th class="text-center"><i class="fas fa-money-bill-alt"></i></th>
-                            <th>Amount</th>
-                            <th>Currency</th>
+                            <th>Description</th>
                             <th>Date</th>
-                            <th>Debtor</th>
-                            <th>Transaction ID</th>
-                            <th>Additional Information</th>
+                            <th>Exchange Rate</th>
+                            <th>Receipts</th>
+                            <th>Additional Notes</th>
+                            <th>Actions</th>  <!-- New column for actions -->
                         </tr>
                     </thead>
                     <tbody>
-                        {% for payment in payments %}
+                        {% for transaction in transactions %}
                             <tr>
                                 <td class="text-center">
                                     <div class="avatar">
-                                        <i class="fas fa-money-bill-alt fa-2x"></i>
+                                        <a href="{% url 'index' %}" target="_blank">
+                                            <i class="fas fa-money-bill-alt fa-2x"></i>
+                                        </a>
                                     </div>
                                 </td>
-                                <td>{{ payment.amount }}</td>
-                                <td>{{ payment.currency }}</td>
-                                <td>{{ payment.date }}</td>
-                                <td>{{ payment.debtor }}</td>
-                                <td>{{ payment.transaction_id }}</td>
-                                <td>{{ payment.additional_information }}</td>
+                                <td>{{ transaction.description }}</td>
+                                <td>{{ transaction.date }}</td>
+                                <td>{{ transaction.exchange_rate }}</td>
+                                <td>{{ transaction.receipts }}</td>
+                                <td>{{ transaction.additional_notes }}</td>
+                                <td>  <!-- Actions column -->
+                                    <a href="{% url 'index' %}" class="btn btn-info btn-sm">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="{% url 'index' %}" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="{% url 'index' %}" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </td>
                             </tr>
                         {% empty %}
                             <tr>
-                                <td colspan="7">No payments found.</td>
+                                <td colspan="7">No transactions found.</td>
                             </tr>
                         {% endfor %}
                     </tbody>

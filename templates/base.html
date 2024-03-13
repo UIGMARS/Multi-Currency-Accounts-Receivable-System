@@ -32,18 +32,12 @@
         UIG Multiple Accounts Receivable System
       </a>
 
-      {% comment %} <!-- Menu items -->
+      <!-- Logout button -->
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+          <a class="nav-link" href="{% url 'logout' %}">Logout</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'debtor_list' %}">Debtors</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'payment_list' %}">Payments</a>
-        </li>
-      </ul> {% endcomment %}
+      </ul>
     </header>
 
     <div class="app-body">

@@ -1,10 +1,30 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth import authenticate, login, logout
 from django.views.generic import ListView, DetailView, CreateView
 from django.shortcuts import render
 from debt_tracker.models import Debtor, Payment, Transaction
 from debt_tracker.forms import PaymentForm
 import uuid
 from django.http import JsonResponse
+
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('dashboard')  # Redirect to dashboard on successful login
+        else:
+            # Pass the form data back to the template
+            return render(request, 'login.html', {'error_message': 'Invalid username or password.', 'request': request.POST})
+    else:
+        return render(request, 'login.html')
+    
+def custom_logout(request):
+    logout(request)
+    return redirect('login')  # Redirect to the login page after logout
 
 def index(request):
     return render(request, 'index.html')
@@ -17,13 +37,15 @@ def debtor_list(request):
     debtors = Debtor.objects.all()
     return render(request, 'debtor_list.html', {'debtors': debtors})
 def payment_list(request):
-    return render(request, 'payment_list.html')
+    payments = Payment.objects.all()  # Query all Payment objects
+    return render(request, 'payment_list.html', {'payments': payments})  # Pass payments to the template context
 
 def payment_form(request):
     return render(request, 'payment_form.html')
 
 def transaction_list(request):
-    return render(request, 'transaction_list.html')
+    transactions = Transaction.objects.all()
+    return render(request, 'transaction_list.html', {'transactions': transactions}) # Pass payments to the template context
 
 def transaction_detail(request):
     return render(request, 'transaction_detail.html')
@@ -55,3 +77,9 @@ def update_balance(request):
         return JsonResponse({'updated_balance': new_balance})
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=400)
+    
+def csrf_failure(request, reason=''):
+    return render(request, '403.html', status=403)
+
+def page_not_found(request, exception):
+    return render(request, '404.html', status=404)
