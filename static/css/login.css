@@ -1,192 +1,190 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+@import url("https://fonts.googleapis.com/css?family=Raleway:400,700");
 
 * {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;	
-	font-family: Raleway, sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Raleway, sans-serif;
 }
 
 body {
-	background: linear-gradient(90deg, #8cbce9, #395e91);	
-    
-    padding-top: 20px;
-    padding-bottom: 20px;	
+  background: linear-gradient(90deg, #8cbce9, #395e91);
+
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .container {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 
-.screen {		
-	border-radius: 10px; 
-    background: linear-gradient(90deg, #51689a, #5d79aa);		
-	position: relative;	
-	height: 600px;
-	width: 360px;	
-	box-shadow: 0px 0px 24px #536999;
+.screen {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #51689a, #0b0f1712);
+  position: relative;
+  height: 600px;
+  width: 360px;
+  box-shadow: 0px 0px 24px #536999;
 }
 
 .screen__content {
-	z-index: 1;
-	position: relative;	
-	height: 100%;
+  z-index: 1;
+  position: relative;
+  height: 100%;
 }
 
-.screen__background {		
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	z-index: 0;
-	-webkit-clip-path: inset(0 0 0 0);
-	clip-path: inset(0 0 0 0);	
+.screen__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  -webkit-clip-path: inset(0 0 0 0);
+  clip-path: inset(0 0 0 0);
 }
 
 .screen__background__shape {
-	transform: rotate(45deg);
-	position: absolute;
+  transform: rotate(45deg);
+  position: absolute;
 }
 
 .screen__background__shape1 {
-	height: 520px;
-	width: 520px;
-	background: #fff;	
-	top: -50px;
-	right: 120px;	
-	border-radius: 72px;
+  height: 520px;
+  width: 520px;
+  background: #fff;
+  top: -50px;
+  right: 120px;
+  border-radius: 72px;
 }
 
 .screen__background__shape2 {
-	height: 220px;
-	width: 220px;
-	background: #7e9bcf;	
-	top: -172px;
-	right: 0;	
-	border-radius: 32px;
+  height: 220px;
+  width: 220px;
+  background: #7e9bcf;
+  top: -172px;
+  right: 0;
+  border-radius: 32px;
 }
 
 .screen__background__shape3 {
-	height: 540px;
-	width: 190px;
-	background: linear-gradient(270deg, #51689a, #5d79aa);
-	top: -24px;
-	right: 0;	
-	border-radius: 32px;
+  height: 540px;
+  width: 190px;
+  background: linear-gradient(270deg, #0b0f1712, #0b0f1712);
+  top: -24px;
+  right: 0;
+  border-radius: 32px;
 }
 
 .screen__background__shape4 {
-	height: 400px;
-	width: 200px;
-	background: #91a6d3;	
-	top: 420px;
-	right: 50px;	
-	border-radius: 60px;
+  height: 400px;
+  width: 200px;
+  background: #91a6d3;
+  top: 420px;
+  right: 50px;
+  border-radius: 60px;
 }
 
 .login {
-	width: 320px;
-	padding: 30px;
-	padding-top: 156px;
-    margin: 0 auto; /* Center the form horizontally */
-    text-align: center; /* Center the content inside the form */
+  width: 320px;
+  padding: 30px;
+  padding-top: 156px;
+  margin: 0 auto; /* Center the form horizontally */
+  text-align: center; /* Center the content inside the form */
 }
 
 .login__field {
-	padding: 20px 0px;	
-	position: relative;	
-    display: flex;
-    align-items: center; /* Align items vertically */
-    justify-content: center; /* Center the input field horizontally */
-
+  padding: 20px 0px;
+  position: relative;
+  display: flex;
+  align-items: center; /* Align items vertically */
+  justify-content: center; /* Center the input field horizontally */
 }
 
 .login__icon {
-	position: absolute;
-	top: 50%; /* Position the icon at the vertical center */
-    transform: translateY(-50%); /* Adjust vertical alignment */
-    left: 10px; /* Add spacing from the left */
-	color: #99b4e8;
-    z-index: 1; /* Ensure the icons appear above the input text */
+  position: absolute;
+  top: 50%; /* Position the icon at the vertical center */
+  transform: translateY(-50%); /* Adjust vertical alignment */
+  left: 10px; /* Add spacing from the left */
+  color: #000000;
+  z-index: 1; /* Ensure the icons appear above the input text */
 }
 
 .login__input {
-	border: none;
-	border-bottom: 2px solid #b3c7f0;
-	background: none;
-	padding: 10px;
-	padding-left: 40px;
-	font-weight: 700;
-	width: 100%;
-	transition: .2s;
+  border: none;
+  border-bottom: 2px solid #b3c7f0;
+  background: none;
+  padding: 10px;
+  padding-left: 40px;
+  font-weight: 700;
+  width: 100%;
+  transition: 0.2s;
 }
 
 .login__input:active,
 .login__input:focus,
 .login__input:hover {
-	outline: none;
-	border-bottom-color: #7e9bcf;
+  outline: none;
+  border-bottom-color: #7e9bcf;
 }
 
 .login__submit {
-	background: #fff;
-	font-size: 14px;
-	margin-top: 30px;
-	padding: 16px 20px;
-	border-radius: 26px;
-	border: 1px solid #b3c7f0;
-	text-transform: uppercase;
-	font-weight: 700;
-	display: flex;
-	align-items: center;
-	width: 100%;
-	color: #4c78d8;
-	box-shadow: 0px 2px 2px #536999;
-	cursor: pointer;
-	transition: .2s;
+  background: #fff;
+  font-size: 14px;
+  margin-top: 30px;
+  padding: 16px 20px;
+  border-radius: 26px;
+  border: 1px solid #b3c7f0;
+  text-transform: uppercase;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  color: #4c78d8;
+  box-shadow: 0px 2px 2px #536999;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
 .login__submit:active,
 .login__submit:focus,
 .login__submit:hover {
-	border-color: #7e9bcf;
-	outline: none;
+  border-color: #7e9bcf;
+  outline: none;
 }
 
 .button {
-    background: #fff;
-    font-size: 14px;
-    margin-top: 30px;
-    padding: 16px 20px;
-    border-radius: 26px;
-    border: 1px solid #D4D3E8;
-    text-transform: uppercase;
-    font-weight: 700;
-    display: inline-block; /* Make the button inline-block to center it */
-    color: #4C489D;
-    box-shadow: 0px 2px 2px #5C5696;
-    cursor: pointer;
-    transition: .2s;
+  background: #fff;
+  font-size: 14px;
+  margin-top: 30px;
+  padding: 16px 20px;
+  border-radius: 26px;
+  border: 1px solid #d4d3e8;
+  text-transform: uppercase;
+  font-weight: 700;
+  display: inline-block; /* Make the button inline-block to center it */
+  color: #4c489d;
+  box-shadow: 0px 2px 2px #5c5696;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
 .button__icon {
-	font-size: 24px;
-	margin-left: auto;
-	color: #99b4e8;
+  font-size: 24px;
+  margin-left: auto;
+  color: #000000;
 }
 
 .button.login__submit {
-    transition: transform 0.2s ease; /* Add transition for transform property */
+  transition: transform 0.2s ease; /* Add transition for transform property */
 }
 
 .button.login__submit:hover {
-    transform: scale(1.05); /* Scale up the button on hover */
+  transform: scale(1.05); /* Scale up the button on hover */
 }
-
 
 .forgot-remember {
   display: flex;
@@ -197,7 +195,7 @@ body {
 
 .forgot-password__link,
 .remember-me__label {
-  font-family: 'Raleway', sans-serif; /* Use the same font as the text field */
+  font-family: "Raleway", sans-serif; /* Use the same font as the text field */
   color: #000; /* Use the same color as the text field */
   text-decoration: none;
   font-size: 14px;
@@ -211,48 +209,46 @@ body {
   text-decoration: underline; /* Add underline on hover */
 }
 
-
 .logo {
-    position: absolute;
-    top: 80px; /* Adjust top position as needed */
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 999; /* Set z-index to ensure it appears above other elements */
-    width: 100px; /* Adjust width as needed */
-    height: auto; /* Maintain aspect ratio */
-    border-radius: 50%; /* Make it rounded */
-    overflow: hidden; /* Hide any overflow content */
+  position: absolute;
+  top: 80px; /* Adjust top position as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999; /* Set z-index to ensure it appears above other elements */
+  width: 100px; /* Adjust width as needed */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 50%; /* Make it rounded */
+  overflow: hidden; /* Hide any overflow content */
 }
 
 .toggle-password {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    cursor: pointer;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
 }
 
 .forgot-password {
-    display: flex;
-    justify-content: center; /* Center the link horizontally */
-    margin-top: 20px;
+  display: flex;
+  justify-content: center; /* Center the link horizontally */
+  margin-top: 20px;
 }
 
 .card-header {
-    background-color: #51689a; /* Match the background color of the card */
-    padding: 10px; /* Adjust padding as needed */
-    border-radius: 10px 10px 0 0; /* Rounded corners */
+  background-color: #51689a; /* Match the background color of the card */
+  padding: 10px; /* Adjust padding as needed */
+  border-radius: 10px 10px 0 0; /* Rounded corners */
 }
 .title {
-    text-align: center;
-    font-size: 18px; /* Adjust font size as needed */
-    color: #000; /* Black color */
-    margin: 0; /* Adjust top margin as needed */
-    font-family: 'Raleway', sans-serif; /* Match the font-family used in other elements */
+  text-align: center;
+  font-size: 18px; /* Adjust font size as needed */
+  color: #000; /* Black color */
+  margin: 0; /* Adjust top margin as needed */
+  font-family: "Raleway", sans-serif; /* Match the font-family used in other elements */
 }
 
 .error-message {
-    color: red; /* Set color to red */
-    font-size: smaller; /* Make font size smaller */
-  }
-  
+  color: red; /* Set color to red */
+  font-size: smaller; /* Make font size smaller */
+}
