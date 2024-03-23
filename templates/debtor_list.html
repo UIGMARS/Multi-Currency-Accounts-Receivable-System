@@ -1,70 +1,71 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block breadcrumb %}
-    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
-    <li class="breadcrumb-item">Debtors</li>
-{% endblock breadcrumb %}
-
-{% block content %}
-    <div class="container-fluid">
-        <div class="animated fade-in">
-            <div class="row">
-                <div class="col-md-12 mb-3">
-                    <a href="{% url 'index' %}" class="btn btn-primary">
-                        <i class="fas fa-plus-circle"></i> Add New Debtor
-                    </a>
-                </div>
-            </div>
-            <div class="row">
-                <table class="table table-responsive-sm table-hover table-outline mb-5">
-                    <thead class="thead-light">
-                        <tr>
-                            <th class="text-center"><i class="fa fa-users"></i></th>
-                            <th>Name</th>
-                            <th>Contact Details</th>
-                            <th>Outstanding Balance</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for debtor in debtors %}
-                            <tr>
-                                <td class="text-center">
-                                    <div class="avatar">
-                                        <i class="fa fa-user fa-2x"></i>
-                                    </div>
-                                </td>
-                                <td>{{ debtor.name }}</td>
-                                <td>
-                                    <ul>
-                                        <li>Phone: {{ debtor.phone }}</li>
-                                        <li>Email: {{ debtor.email }}</li>
-                                        <li>Address: {{ debtor.address }}</li>
-                                    </ul>
-                                </td>
-                                <td>{{ debtor.outstanding_balance }}</td>
-                                <td>
-                                    <a href="{% url 'debtor_detail' unique_id=debtor.unique_id %}" class="btn btn-sm btn-primary mr-2">
-                                        <i class="fas fa-eye"></i> <!-- View Details icon -->
-                                    </a>
-                                    <button class="btn btn-sm btn-info mr-2">
-                                        <i class="fas fa-pencil-alt"></i> <!-- Edit icon -->
-                                    </button>
-                                    <button class="btn btn-sm btn-danger">
-                                        <i class="fas fa-trash"></i> <!-- Delete icon -->
-                                    </button>
-                                </td>
-                            </tr>
-                        {% empty %}
-                            <tr>
-                                <td colspan="5">No debtors found.</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+{% extends 'base.html' %} {% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+<li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+<li class="breadcrumb-item">Debtors</li>
+{% endblock breadcrumb %} {% block content %}
+<div class="container-fluid">
+  <div class="animated fade-in">
+    <div class="row">
+      <div class="col-md-12 mb-3">
+        <a href="{% url 'index' %}" class="btn btn-primary">
+          <i class="fas fa-plus-circle"></i> Add New Debtor
+        </a>
+      </div>
     </div>
+    <div class="row">
+      <table class="table table-responsive-sm table-hover table-outline mb-5">
+        <thead class="thead-light">
+          <tr>
+            <th class="text-center"><i class="fa fa-users"></i></th>
+            <th>Name</th>
+            <th>Contact Details</th>
+            <th>Outstanding Balance</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for debtor in debtors %}
+          <tr>
+            <td class="text-center">
+              <div class="avatar">
+                <i class="fa fa-user fa-2x"></i>
+              </div>
+            </td>
+            <td>{{ debtor.name }}</td>
+            <td>
+              <ul>
+                <li>Phone: {{ debtor.phone }}</li>
+                <li>Email: {{ debtor.email }}</li>
+                <li>Address: {{ debtor.address }}</li>
+              </ul>
+            </td>
+            <td>{{ debtor.outstanding_balance }}</td>
+            <td>
+              <a
+                href="{% url 'debtor_detail' unique_id=debtor.unique_id %}"
+                class="btn btn-sm btn-primary mr-2"
+              >
+                <i class="fas fa-eye"></i>
+                <!-- View Details icon -->
+              </a>
+              <button class="btn btn-sm btn-info mr-2">
+                <i class="fas fa-pencil-alt"></i>
+                <!-- Edit icon -->
+              </button>
+              <button class="btn btn-sm btn-danger">
+                <i class="fas fa-trash"></i>
+                <!-- Delete icon -->
+              </button>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5">No debtors found.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 {% endblock %}

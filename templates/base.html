@@ -9,31 +9,19 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>UIG MARS</title>
+    
 
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
-      integrity="sha384-mCk7z1DTPx7y+flm6I7B/21I2G0i2/Fkhrw1wx6X+/4u0tmB6kNTdPIyQbh7InRj"
-      crossorigin="anonymous"
-    />
-
-    <!-- Simple Line Icons -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.5.5/css/simple-line-icons.min.css"
-      integrity="sha384-ZpFqW1LxNzAjxBNhCj/6yBAtQk3YfdU5GdJgC8GBAR6Mf10irAYMQROvh0QeUo1k"
-      crossorigin="anonymous"
-    />
+   
+  
+   
 
     <!-- Bootstrap CSS -->
+    
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
-
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
+  />
+  
     <!-- Main styles for this application -->
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/css/adminlte.min.css"
@@ -41,74 +29,199 @@
     />
 
     <!-- favicon Icons -->
-    <link rel="icon" type="image/png" href="../static/img/uig-logo.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="{% static 'img/uig-logo-bg.png' %}"
+    />
+
+    <!-- Link Styles -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
   </head>
+<body>
 
-  <body
-    class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden"
-  >
-    <div class="container">
-      <header class="app-header navbar navbar-dark bg-primary">
-        <button
-          class="navbar-toggler d-lg-none"
-          type="button"
-          data-toggle="sidebar-show"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <!-- Logo with space for logo -->
-        <a class="navbar-brand" href="index">
-          <img
-            src="{% static 'img/uig-logo-new.jpg' %}"
-            alt="UIG Logo"
-            height="30"
-          />
-          UIG Multiple Accounts Receivable System
-        </a>
-
-        <!-- Logout button -->
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+  <div class="wrapper">
+    <aside id="sidebar" class="js-sidebar">
+      <!-- Content For Sidebar -->
+      <div class="h-100">
+        <div class="sidebar-logo">
+         <center> <a href="#">UIG</a></center>
+        </div>
+        <ul class="sidebar-nav">
+          <li class="sidebar-header">Admin Panel</li>
+          <li class="sidebar-item">
+            <a href="{% url 'dashboard' %}" class="sidebar-link">
+              <i class="fa-solid fa-list pe-2"></i>
+              Dashboard
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a
+              href="#l"
+              class="sidebar-link collapsed"
+              data-bs-target="#pages"
+              data-bs-toggle="collapse"
+              aria-expanded="false"
+              ><i class="fa-solid fa-file-lines pe-2"></i>
+              Debtors
+            </a>
+            <ul
+              id="pages"
+              class="sidebar-dropdown list-unstyled collapse"
+              data-bs-parent="#sidebar"
+            >
+              <li class="sidebar-item">
+                <a href="{% url 'debtor_detail' %}" class="sidebar-link">Debtor Details</a>
+              </li>
+              <li class="sidebar-item">
+                <a href="{% url 'debtor_list' %}" class="sidebar-link">Debtor List</a>
+              </li>
+            </ul>
+          </li>
+          <li  class="sidebar-item">
+            <a
+              href="#"
+              class="sidebar-link collapsed"
+              data-bs-target="#payment"
+              data-bs-toggle="collapse"
+              aria-expanded="false"
+              ><i class="fa-solid fa-paypal pe-2"></i>
+              Payments
+            </a>
+            <ul
+              id="payment"
+              class="sidebar-dropdown list-unstyled collapse"
+              data-bs-parent="#sidebar"
+            >
+              <li class="sidebar-item">
+                <a href="{% url 'payment_form' %}" class="sidebar-link">Payment Form</a>
+              </li>
+              <li class="sidebar-item">
+                <a href="{% url 'payment_list' %}" class="sidebar-link">Payment List</a>
+              </li>
+            </ul>
+          </li>
+          <li class="sidebar-item">
+            <a
+              href="#"
+              class="sidebar-link collapsed"
+              data-bs-target="#trans"
+              data-bs-toggle="collapse"
+              aria-expanded="false"
+              ><i class="fa-regular fa-money-bill pe-2"></i>
+              Transaction
+            </a>
+            <ul
+              id="trans"
+              class="sidebar-dropdown list-unstyled collapse"
+              data-bs-parent="#sidebar"
+            >
+              <li class="sidebar-item">
+                <a href="#" class="sidebar-link">Transaction </a>
+              </li>
+              <li class="sidebar-item">
+                <a href="#" class="sidebar-link">Add Transation</a>
+              </li>
+              <li class="sidebar-item">
+                <a href="#" class="sidebar-link">Transaction Details</a>
+              </li>
+              <li class="sidebar-item">
+                <a href="#" class="sidebar-link">Transaction List</a>
+              </li>
+            </ul>
+          </li>
+          <li class="sidebar-item">
+            <a
+              href="#"
+              class="sidebar-link collapsed"
+              data-bs-target="#user"
+              data-bs-toggle="collapse"
+              aria-expanded="false"
+              ><i class="fa-regular fa-user pe-2"></i>
+              Users
+            </a>
+            <ul
+              id="user"
+              class="sidebar-dropdown list-unstyled collapse"
+              data-bs-parent="#sidebar"
+            >
+              <li class="sidebar-item">
+                <a href="#" class="sidebar-link">Add User</a>
+              </li>
+              <li class="sidebar-item">
+                <a href="#" class="sidebar-link">User List</a>
+              </li>
+             
+            </ul>
           </li>
         </ul>
-      </header>
-
-      <div class="app-body">
-        <div class="sidebar">
-          <!-- Sidebar content goes here -->
-          {% comment %}
-          <p>Sidebar content goes here</p>
-          {% endcomment %}
-        </div>
-
-        <main class="main">
-          <!-- Breadcrumb -->
-          <ol class="breadcrumb">
-            {% block breadcrumb %}
-            <!-- Breadcrumb items go here -->
-            {% endblock %}
-          </ol>
-
-          {% block content %}
-          <!-- Main content goes here -->
-          {% endblock %}
-        </main>
       </div>
+    </aside>
+  <div class="main">
+    <nav class="navbar navbar-expand px-3 border-bottom">
+      <button class="btn " id="sidebar-toggle" type="button">
+        <span class="navbar-toggler-icon" ></span>
+      </button> 
+      <center><h4> <b>UIG</b></h4></center>
+      <div class="navbar-collapse navbar">
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+              <img
+                src="https://via.placeholder.com/50
+                class="avatar img-fluid rounded"
+                alt="User Avatar"
+              />
+            </a>
+            <div class="dropdown-menu dropdown-menu-end">
+              <a href="#" class="dropdown-item">Setting</a>
+              <a href="#" class="dropdown-item">Logout</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    
+    <main class="content px-3 py-2">
+      <div class="">
+       
+        <ol class="breadcrumb">
+          
+          {% block breadcrumb %}
+          <!-- Breadcrumb items go here -->
+          {% endblock %}
+        </ol>
 
-      <footer class="app-footer">
+        {% block content %}
+      
+        {% endblock %}
+      
+      </div>
+    </main>
+    <a href="#" class="theme-toggle">
+      <i class="fa-regular fa-moon"></i>
+      <i class="fa-regular fa-sun"></i>
+    </a>
+        
+       
+      
+      <footer class=" app-footer second mt-10 text-white">
         <!-- Footer content goes here -->
-        <div class="container bg-black mt-10">
+        <div class="container ">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-5">
               <p>UIG &copy; 2024 All Rights Reserved.</p>
             </div>
-            <div class="col-md-6 text-end">
+            <div class="col-md-5 text-end">
               <p>Developed by JPJ Developers</p>
             </div>
           </div>
         </div>
       </footer>
+   </div>
+   </div>
+   
 
       <!-- Bootstrap and necessary plugins -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -118,17 +231,14 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js"></script>
 
       <!-- Bootstrap JavaScript -->
-      <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"
-      ></script>
-
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="{% static 'js/script.js' %}"></script>
       <!-- FontAwesome JavaScript -->
       <script
         src="https://kit.fontawesome.com/9c2a40def3.js"
         crossorigin="anonymous"
       ></script>
     </div>
+   
   </body>
 </html>

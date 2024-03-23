@@ -1,33 +1,35 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block breadcrumb %}
-    <li class="breadcrumb-item active">Home</li>
-    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
-{% endblock breadcrumb %}
-
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block breadcrumb %}
+<li class="breadcrumb-item active">Home</li>
+<li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+{% endblock breadcrumb %} {% block content %}
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <i class="fa fa-align-justify"></i> Home
-                </div>
-                <div class="card-body">
-                    <div class="jumbotron bg-white">
-                        <h1 class="display-4">UIG Multiple Accounts Receivable System</h1>
-                        <p class="lead">Welcome to the UIG Multiple Accounts Receivable System</p>
-                        <hr class="my-4">
-                        {% if not user.is_authenticated %}
-                        <p class="lead">
-                            <a class="btn btn-primary btn-lg" href="{% url 'login' %}" role="button">Login to Continue</a>
-                        </p>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <!-- <div class="card-header"><i class="fa fa-align-justify"></i> Home</div> -->
+        <div class="card-body">
+          <div class="jumbotron bg-white">
+            <h1 class="display-4">UIG Multiple Accounts Receivable System</h1>
+            <p class="lead">
+              <center>
+                <h5><b> Welcome to the UIG</b></h5>
+              </center>
+            </p>
+            <hr class="my-4" />
+            {% if not user.is_authenticated %}
+            <p class="lead">
+              <a
+                class="btn btn-primary btn-lg"
+                href="{% url 'login' %}"
+                role="button"
+                >Login to Continue</a
+              >
+            </p>
+            {% endif %}
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 {% endblock %}

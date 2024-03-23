@@ -22,6 +22,8 @@ urlpatterns = [
     path ('transaction-list', views.transaction_list, name='transaction_list'),
     path('debtor-detail/<str:unique_id>/', views.debtor_detail, name='debtor_detail'),
     path('update_balance/', views.update_balance, name='update_balance'),
+    
+
 
 
 ]
