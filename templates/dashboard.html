@@ -7,90 +7,118 @@
 
 {% block content %}
 <style>
-    .card-footer:hover {
-        background-color: rgba(0, 0, 0, 0.2); /* Adjust the opacity as needed */
-        cursor: pointer; /* Change cursor to pointer on hover */
-    }
+  .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .card-body {
+    flex-grow: 1;
+  }
+
+  .card-text {
+    font-size: 2rem; /* Adjust the default font size as needed */
+  }
+
+  .card-footer {
+    flex-shrink: 0;
+  }
+
+  .card-footer:hover {
+    background-color: rgba(0, 0, 0, 0.2); /* Adjust the opacity as needed */
+    cursor: pointer; /* Change cursor to pointer on hover */
+  }
+
+  .card-icon {
+    font-size: 2rem; /* Adjust icon size as needed */
+  }
 </style>
 
 <div class="container-fluid">
-    <div class="row mb-4">
-        <div class="col-md-3">
-            <div class="card text-white bg-primary">
-                <div class="card-body">
-                    <p class="card-text display-4 font-weight-bold">{{ total_debtors }}</p>
-                    <p class="card-text small font-weight-bold">Total Number of Debtors</p>
-                    <i class="fas fa-users fa-2x float-right"></i>
-                </div>
-                <a href="{% url 'debtor_list' %}" class="text-decoration-none">
-                    <div class="card-footer bg-primary-light">
-                        More info <i class="fas fa-chevron-circle-right float-right"></i>
-                    </div>
-                </a>
-            </div>
+  <div class="row mb-4">
+    <div class="col-md-3">
+      <div class="card text-white bg-primary">
+        <div class="card-body">
+          <p class="card-text font-weight-bold">
+            {{ total_debtors }}
+          </p>
+          <p class="card-label">Total Number of Debtors</p>
         </div>
-        <div class="col-md-3">
-            <div class="card text-white bg-info">
-                <div class="card-body">
-                    <p class="card-text display-4 font-weight-bold">{{ total_outstanding_debt }}</p>
-                    <p class="card-text small font-weight-bold">Total Outstanding Debt</p>
-                    <i class="fas fa-money-bill-wave fa-2x float-right"></i>
-                </div>
-                <a href="{% url 'debtor_list' %}" class="text-decoration-none">
-                    <div class="card-footer bg-info-light">
-                        More info <i class="fas fa-chevron-circle-right float-right"></i>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card text-white bg-success">
-                <div class="card-body">
-                    <p class="card-text display-4 font-weight-bold">{{ total_payments }}</p>
-                    <p class="card-text small font-weight-bold">Total Number of Payments</p>
-                    <i class="fas fa-chart-line fa-2x float-right"></i>
-                </div>
-                <a href="{% url 'payment_list' %}" class="text-decoration-none">
-                    <div class="card-footer bg-success-light">
-                        More info <i class="fas fa-chevron-circle-right float-right"></i>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card text-white bg-warning">
-                <div class="card-body">
-                    <p class="card-text display-4 font-weight-bold">{{ total_collected }}</p>
-                    <p class="card-text small font-weight-bold">Total Payments Collected</p>
-                    <i class="fas fa-coins fa-2x float-right"></i>
-                </div>
-                <a href="{% url 'payment_list' %}" class="text-decoration-none">
-                    <div class="card-footer bg-warning-light">
-                        More info <i class="fas fa-chevron-circle-right float-right"></i>
-                    </div>
-                </a>
-            </div>
-        </div>
+        <a href="{% url 'debtor_list' %}" class="text-decoration-none">
+          <div class="card-footer bg-primary-light">
+            More info <i class="fas fa-chevron-circle-right float-right card-icon"></i>
+          </div>
+        </a>
+      </div>
     </div>
-    <div class="row mt-4">
-        <div class="col-md-12">
-            <div class="card text-white bg-dark">
-                <div class="card-header">
-                    <strong>Recent Transactions</strong>
-                </div>
-                <div class="card-body">
-                    <ul>
-                        {% if recent_transactions %}
-                            {% for transaction in recent_transactions %}
-                                <li>{{ transaction.date }} - {{ transaction.description }} - {{ transaction.payment.amount }}</li>
-                            {% endfor %}
-                        {% else %}
-                            <p>No transactions</p>
-                        {% endif %}
-                    </ul>
-                </div>
-            </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-info">
+        <div class="card-body">
+          <p class="card-text font-weight-bold">
+            {{ total_outstanding_debt }}
+          </p>
+          <p class="card-label">Total Outstanding Debt</p>
         </div>
+        <a href="{% url 'debtor_list' %}" class="text-decoration-none">
+          <div class="card-footer bg-info-light">
+            More info <i class="fas fa-chevron-circle-right float-right card-icon"></i>
+          </div>
+        </a>
+      </div>
     </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-success">
+        <div class="card-body">
+          <p class="card-text font-weight-bold">
+            {{ total_payments }}
+          </p>
+          <p class="card-label">Total Number of Payments</p>
+        </div>
+        <a href="{% url 'payment_list' %}" class="text-decoration-none">
+          <div class="card-footer bg-success-light">
+            More info <i class="fas fa-chevron-circle-right float-right card-icon"></i>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-warning">
+        <div class="card-body">
+          <p class="card-text font-weight-bold">
+            {{ total_collected }}
+          </p>
+          <p class="card-label">Total Payments Collected</p>
+        </div>
+        <a href="{% url 'payment_list' %}" class="text-decoration-none">
+          <div class="card-footer bg-warning-light">
+            More info <i class="fas fa-chevron-circle-right float-right card-icon"></i>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <div class="card text-white bg-dark">
+        <div class="card-header">
+          <strong>Recent Transactions</strong>
+        </div>
+        <div class="card-body">
+          <ul>
+            {% if recent_transactions %}
+            {% for transaction in recent_transactions %}
+            <li>
+              {{ transaction.date }} - {{ transaction.description }} - {{ transaction.payment.amount }}
+            </li>
+            {% endfor %}
+            {% else %}
+            <p>No transactions</p>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}
