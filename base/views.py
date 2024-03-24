@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import ListView, DetailView, CreateView
@@ -29,30 +30,39 @@ def custom_logout(request):
 def index(request):
     return render(request, 'index.html')
 
+@login_required
 def debtor_detail(request, unique_id):
     debtor = get_object_or_404(Debtor, unique_id=unique_id)
     return render(request, 'debtor_detail.html', {'debtor': debtor})
 
+@login_required
 def debtor_list(request):
     debtors = Debtor.objects.all()
     return render(request, 'debtor_list.html', {'debtors': debtors})
+
+@login_required
 def payment_list(request):
     payments = Payment.objects.all()  # Query all Payment objects
     return render(request, 'payment_list.html', {'payments': payments})  # Pass payments to the template context
 
+@login_required
 def payment_form(request):
     return render(request, 'payment_form.html')
 
+@login_required
 def transaction_list(request):
     transactions = Transaction.objects.all()
     return render(request, 'transaction_list.html', {'transactions': transactions}) # Pass payments to the template context
 
+@login_required
 def transaction_detail(request):
     return render(request, 'transaction_detail.html')
 
+@login_required
 def dashboard(request):
     return render(request, 'dashboard.html')
 
+@login_required
 def dashboard(request):
     total_debtors = Debtor.objects.count()
     total_outstanding_debt = sum(debtor.get_remaining_balance() for debtor in Debtor.objects.all())
@@ -69,6 +79,7 @@ def dashboard(request):
     }
     return render(request, 'dashboard.html', context)
 
+@login_required
 def update_balance(request):
     if request.method == 'POST':
         new_balance = request.POST.get('new_balance')
