@@ -1,7 +1,7 @@
 {
   "builds": [
     {
-      "src": "Multi-Currency-Accounts-Receivable-System/base/wsgi.py",
+      "src": "base/wsgi.py",
       "use": "@vercel/python",
       "config": { "maxlambdasize": "45mb", "runtime": "python3.9" }
     }
@@ -9,7 +9,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "Multi-Currency-Accounts-Receivable-System/base/wsgi.py"
+      "dest": "base/wsgi.py"
     }
   ]
 }
