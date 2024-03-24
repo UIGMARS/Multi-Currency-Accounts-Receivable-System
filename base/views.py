@@ -6,7 +6,8 @@ from django.shortcuts import render
 from debt_tracker.models import Debtor, Payment, Transaction
 from debt_tracker.forms import PaymentForm
 import uuid
-from django.http import JsonResponse
+from django.http import JsonResponse    
+
 
 
 def login_view(request):
