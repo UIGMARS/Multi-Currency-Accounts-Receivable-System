@@ -71,11 +71,11 @@
       <div class="card text-white bg-success">
         <div class="card-body">
           <p class="card-text font-weight-bold">
-            {{ total_payments }}
+            {{ total_transactions }}
           </p>
-          <p class="card-label">Total Number of Payments</p>
+          <p class="card-label">Total Number of Transactions</p>
         </div>
-        <a href="{% url 'payment_list' %}" class="text-decoration-none">
+        <a href="{% url 'transaction_list' %}" class="text-decoration-none">
           <div class="card-footer bg-success-light">
             More info <i class="fas fa-chevron-circle-right float-right card-icon"></i>
           </div>
@@ -88,9 +88,9 @@
           <p class="card-text font-weight-bold">
             {{ total_collected }}
           </p>
-          <p class="card-label">Total Payments Collected</p>
+          <p class="card-label">Total Amount Collected</p>
         </div>
-        <a href="{% url 'payment_list' %}" class="text-decoration-none">
+        <a href="{% url 'transaction_list' %}" class="text-decoration-none">
           <div class="card-footer bg-warning-light">
             More info <i class="fas fa-chevron-circle-right float-right card-icon"></i>
           </div>
@@ -109,7 +109,7 @@
             {% if recent_transactions %}
             {% for transaction in recent_transactions %}
             <li>
-              {{ transaction.date }} - {{ transaction.description }} - {{ transaction.payment.amount }}
+              {{ transaction.date }} - {{ transaction.description }} - {{ transaction.amount }}
             </li>
             {% endfor %}
             {% else %}
