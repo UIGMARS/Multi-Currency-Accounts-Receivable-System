@@ -9,31 +9,26 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>UIG MARS</title>
-    
 
    
-  
-   
-
-    <!-- Bootstrap CSS -->
-    
-    <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
-  />
-  
     <!-- Main styles for this application -->
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/css/adminlte.min.css"
       rel="stylesheet"
     />
-
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"/>
     <!-- favicon Icons -->
     <link
       rel="icon"
       type="image/png"
       href="{% static 'img/uig-logo-bg.png' %}"
     />
+    <!-- FontAwesome JavaScript -->
+    <script
+    src="https://kit.fontawesome.com/9c2a40def3.js"
+    crossorigin="anonymous"
+    ></script>
 
     <!-- Link Styles -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
@@ -63,7 +58,7 @@
               data-bs-target="#pages"
               data-bs-toggle="collapse"
               aria-expanded="false"
-              ><i class="fa-solid fa-file-lines pe-2"></i>
+              ><i class="fa-solid fa-user pe-2"></i>
               Debtors
             </a>
             <ul
@@ -86,7 +81,7 @@
               data-bs-target="#payment"
               data-bs-toggle="collapse"
               aria-expanded="false"
-              ><i class="fa-solid fa-paypal pe-2"></i>
+              ><i class="fa-solid fa-dollar-sign pe-2"></i>
               Payments
             </a>
             <ul
@@ -109,7 +104,7 @@
               data-bs-target="#trans"
               data-bs-toggle="collapse"
               aria-expanded="false"
-              ><i class="fa-regular fa-money-bill pe-2"></i>
+              ><i class="fas fa-exchange-alt pe-2"></i>
               Transaction
             </a>
             <ul
@@ -159,24 +154,24 @@
       </div>
     </aside>
   <div class="main">
-    <nav class="navbar navbar-expand px-3 border-bottom">
-      <button class="btn " id="sidebar-toggle" type="button">
-        <span class="navbar-toggler-icon" ></span>
-      </button> 
+      <nav class="navbar navbar-expand px-3 border-bottom">
+        <button class="btn" id="sidebar-toggle" type="button">
+          <span class="navbar-toggler-icon"></span>
+        </button>
       <center><h4> <b>UIG</b></h4></center>
       <div class="navbar-collapse navbar">
         <ul class="navbar-nav">
           <li class="nav-item dropdown">
             <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
               <img
-                src="https://via.placeholder.com/50
+                src="{% static 'img/uig-logo-bg.png' %}"
                 class="avatar img-fluid rounded"
                 alt="User Avatar"
               />
             </a>
             <div class="dropdown-menu dropdown-menu-end">
               <a href="#" class="dropdown-item">Setting</a>
-              <a href="#" class="dropdown-item">Logout</a>
+              <a href="{% url 'logout' %}" class="btn btn-danger dropdown-item">Logout</a>
             </div>
           </li>
         </ul>
@@ -206,7 +201,7 @@
         
        
       
-      <footer class=" app-footer second mt-10 text-white">
+      <footer class=" footer app-footer second mt-10 text-white bg-dark" style="height: 4opx;">
         <!-- Footer content goes here -->
         <div class="container ">
           <div class="row">
@@ -222,7 +217,7 @@
    </div>
    </div>
    
-
+     
       <!-- Bootstrap and necessary plugins -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
@@ -232,12 +227,9 @@
 
       <!-- Bootstrap JavaScript -->
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
+
       <script src="{% static 'js/script.js' %}"></script>
-      <!-- FontAwesome JavaScript -->
-      <script
-        src="https://kit.fontawesome.com/9c2a40def3.js"
-        crossorigin="anonymous"
-      ></script>
+     
     </div>
    
   </body>

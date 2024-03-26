@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure-!2m1^+^!s0rr_4!x1h7!io56lo5%%#svzg7cdju-@ldjo6dc%$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.vercel.app']
 
 
 # Application definition
@@ -66,10 +66,22 @@ WSGI_APPLICATION = 'base.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'uig',
+        'USER': 'postgres',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -125,7 +137,7 @@ LOGOUT_REDIRECT_URL = '/login/'
 
 # CSRF_FAILURE_VIEW = 'base.views.csrf_failure'
 
-# ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'your-domain.com', 'www.your-domain.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'your-domain.com', 'www.your-domain.com']
 
 # LOGIN_URL = 'login'
 

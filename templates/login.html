@@ -1,74 +1,116 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>UIG MARS Login</title>
-  <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/all.css'>
-  <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css'>
-  <link rel="stylesheet" href="{% static 'css/login.css' %}">
-  
- 
-</head>
-<body>
-<div class="container">
-    <div class="screen">
+  <head>
+    <meta charset="UTF-8" />
+    <title>UIG MARS Login</title>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css"
+    />
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="screen">
         <div class="screen__content">
-            <img src="{% static 'img/uig-logo-new.jpg' %}" alt="UIG Logo" class="logo">
-            <header class="card-header"> <!-- New header for the title -->
-                <h2 class="title">UIG Multiple Accounts Receivable System</h2> <!-- Title inside the header -->
-            </header>
-            <form class="login" action="{% url 'login' %}" method="post">
-                {% csrf_token %}
-                {% if error_message %}
-                <p class="error-message">{{ error_message }}</p> <!-- Display error message -->
-                {% endif %}
-                <div class="login__field">
-                    <i class="login__icon fas fa-user"></i>
-                    <input type="text" name="username" class="login__input" placeholder="Your Username / Email" value="{{ request.POST.username }}">
-                </div>
-                <div class="login__field">
-                    <i class="login__icon fas fa-lock"></i>
-                    <input type="password" name="password" class="login__input" id="passwordInput" placeholder="Your Password">
-                    <i class="toggle-password fas fa-eye-slash" onclick="togglePasswordVisibility()"></i>
-                </div>
-                <div class="remember-me">
-                    <input type="checkbox" id="rememberMe" name="remember" class="remember-me__checkbox">
-                    <label for="rememberMe" class="remember-me__label">Remember Me</label>
-                </div>
-                <button type="submit" class="button login__submit">
-                    <span class="button__text">Log In Now</span>
-                    <i class="button__icon fas fa-chevron-right"></i>
-                </button>                
-            </form>
-            <div class="forgot-password">
-                <a href="#" class="forgot-password__link">Forgot Password?</a>
+          <img
+            src="{% static 'img/uig-logo.png' %}"
+            alt="UIG Logo"
+            class="logo"
+          />
+          <header class="card-header">
+            <!-- New header for the title -->
+            <h2 class="title">UIG Multiple Accounts Receivable System</h2>
+            <!-- Title inside the header -->
+          </header>
+          <form class="login" action="{% url 'login' %}" method="post">
+            {% csrf_token %} {% if error_message %}
+            <p class="error-message"><b>{{ error_message }}</b></p>
+            <!-- Display error message -->
+            {% endif %}
+            <div class="login__field">
+              <i class="login__icon fas fa-user"></i>
+              <input
+                type="text"
+                name="username"
+                class="login__input"
+                placeholder="Your Username / Email"
+                value="{{ request.POST.username }}"
+              />
             </div>
+            <div class="login__field">
+              <i class="login__icon fas fa-lock"></i>
+              <input
+                type="password"
+                name="password"
+                class="login__input"
+                id="passwordInput"
+                placeholder="Your Password"
+              />
+              <i
+                class="toggle-password fas fa-eye-slash"
+                onclick="togglePasswordVisibility()"
+              ></i>
+            </div>
+            <div class="remember-me">
+              <input
+                type="checkbox"
+                id="rememberMe"
+                name="remember"
+                class="remember-me__checkbox"
+              />
+              <label for="rememberMe" class="remember-me__label"
+                >Remember Me</label
+              >
+            </div>
+            <button type="submit" class="button login__submit">
+              <span class="button__text">Login</span>
+              <i class="button__icon fas fa-chevron-right"></i>
+            </button>
+          </form>
+          <div class="forgot-password">
+            <a href="#" class="forgot-password__link">Forgot Password?</a>
+          </div>
         </div>
         <div class="screen__background">
-            <span class="screen__background__shape screen__background__shape4"></span>
-            <span class="screen__background__shape screen__background__shape3"></span>        
-            <span class="screen__background__shape screen__background__shape2"></span>
-            <span class="screen__background__shape screen__background__shape1"></span>
-        </div>      
+          <span
+            class="screen__background__shape screen__background__shape4"
+          ></span>
+          <span
+            class="screen__background__shape screen__background__shape3"
+          ></span>
+          <span
+            class="screen__background__shape screen__background__shape2"
+          ></span>
+          <span
+            class="screen__background__shape screen__background__shape1"
+          ></span>
+        </div>
+      </div>
     </div>
-</div>
 
-<script>
-    function togglePasswordVisibility() {
+    <script>
+      function togglePasswordVisibility() {
         var passwordInput = document.getElementById("passwordInput");
         var eyeIcon = document.querySelector(".toggle-password");
 
         if (passwordInput.type === "password") {
-            passwordInput.type = "text";
-            eyeIcon.classList.remove("fa-eye-slash");
-            eyeIcon.classList.add("fa-eye");
+          passwordInput.type = "text";
+          eyeIcon.classList.remove("fa-eye-slash");
+          eyeIcon.classList.add("fa-eye");
         } else {
-            passwordInput.type = "password";
-            eyeIcon.classList.remove("fa-eye");
-            eyeIcon.classList.add("fa-eye-slash");
+          passwordInput.type = "password";
+          eyeIcon.classList.remove("fa-eye");
+          eyeIcon.classList.add("fa-eye-slash");
         }
-    }
-</script>  
-</body>
+      }
+    </script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>
