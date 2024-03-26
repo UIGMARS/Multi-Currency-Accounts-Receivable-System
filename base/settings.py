@@ -137,7 +137,7 @@ LOGOUT_REDIRECT_URL = '/login/'
 
 # CSRF_FAILURE_VIEW = 'base.views.csrf_failure'
 
-# ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'your-domain.com', 'www.your-domain.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'your-domain.com', 'www.your-domain.com']
 
 # LOGIN_URL = 'login'
 

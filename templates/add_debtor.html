@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+<li class="breadcrumb-item"><a href="{% url 'debtor_list' %}">Debtor List</a></li>
+<li class="breadcrumb-item active">Add New Debtor</li>
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="container">
+  <h2>Add New Debtor</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="id_name" class="form-label">Name:</label>
+          {{ form.name }}
+          {% if form.name.errors %}
+          <div class="invalid-feedback">
+            {{ form.name.errors|join:", " }}
+          </div>
+          {% endif %}
+        </div>
+        <div class="mb-3">
+          <label for="id_phone_number" class="form-label">Phone number:</label>
+          {{ form.phone_number }}
+          {% if form.phone_number.errors %}
+          <div class="invalid-feedback">
+            {{ form.phone_number.errors|join:", " }}
+          </div>
+          {% endif %}
+        </div>
+        <div class="mb-3">
+          <label for="id_email" class="form-label">Email:</label>
+          {{ form.email }}
+          {% if form.email.errors %}
+          <div class="invalid-feedback">
+            {{ form.email.errors|join:", " }}
+          </div>
+          {% endif %}
+        </div>
+        <div class="mb-3">
+          <label for="id_address" class="form-label">Address:</label>
+          {{ form.address }}
+          {% if form.address.errors %}
+          <div class="invalid-feedback">
+            {{ form.address.errors|join:", " }}
+          </div>
+          {% endif %}
+        </div>
+        <div class="mb-3">
+          <label for="id_unique_id" class="form-label">Unique id:</label>
+          {{ form.unique_id }}
+          {% if form.unique_id.errors %}
+          <div class="invalid-feedback">
+            {{ form.unique_id.errors|join:", " }}
+          </div>
+          {% endif %}
+        </div>
+        <div class="mb-3">
+          <label for="id_total_debt" class="form-label">Total debt:</label>
+          {{ form.total_debt }}
+          {% if form.total_debt.errors %}
+          <div class="invalid-feedback">
+            {{ form.total_debt.errors|join:", " }}
+          </div>
+          {% endif %}
+        </div>
+        <div class="mb-3">
+          <label for="id_notes" class="form-label">Notes:</label>
+          {{ form.notes }}
+          {% if form.notes.errors %}
+          <div class="invalid-feedback">
+            {{ form.notes.errors|join:", " }}
+          </div>
+          {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

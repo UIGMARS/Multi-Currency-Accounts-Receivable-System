@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Edit Debtor</h2>
+<form method="post" id="edit-debtor-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="button" id="save-changes-btn">Save Changes</button>
+</form>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const saveChangesBtn = document.getElementById('save-changes-btn');
+    const editDebtorForm = document.getElementById('edit-debtor-form');
+
+    saveChangesBtn.addEventListener('click', function() {
+        const confirmed = confirm('Are you sure you want to save the changes?');
+        if (confirmed) {
+            editDebtorForm.submit();
+        }
+    });
+});
+</script>
+{% endblock %}
