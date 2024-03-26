@@ -1,6 +1,6 @@
 from django import forms
 from .models import Debtor, Transaction
-from django_select2.forms import ModelSelect2Widget
+# from django_select2.forms import ModelSelect2Widget
 
 class TransactionForm(forms.ModelForm):
     # generate_transaction_id = forms.BooleanField(widget=forms.HiddenInput(), required=False)
