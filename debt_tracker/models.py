@@ -17,7 +17,7 @@ class Debtor(models.Model):
 
     def get_remaining_balance(self):
         if self.transaction_set.exists():
-            payments_total = sum(transaction.payment.amount for transaction in self.transaction_set.all())
+            payments_total = sum(transaction.amount for transaction in self.transaction_set.all())
             remaining_balance = payments_total
         else:
             remaining_balance = self.total_debt
