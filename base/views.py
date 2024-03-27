@@ -152,11 +152,16 @@ def add_transaction(request):
     if request.method == 'POST':
         form = TransactionForm(request.POST, request.FILES)
         if form.is_valid():
+            print(form.cleaned_data)  # Print form data for inspection
             form.save()  # Save the form data
             return redirect('transaction_list')  # Redirect to transaction list after successful addition
+        else:
+            print(form.errors)  # Print form errors for debugging
     else:
         form = TransactionForm()
     return render(request, 'add_transaction.html', {'form': form})
+
+
 
 
 def edit_transaction(request, pk):

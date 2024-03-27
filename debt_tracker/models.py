@@ -40,7 +40,6 @@ class Transaction(models.Model):
     debtor = models.ForeignKey(Debtor, on_delete=models.CASCADE, default=1)  # Set default debtor to 1
     amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default='SLL')
-    additional_information = models.TextField(default='')
     unique_id = models.CharField(max_length=10, unique=True)
 
     def generate_unique_id(self):
