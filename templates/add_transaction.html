@@ -1,125 +1,79 @@
-{% extends 'base.html' %} {% block breadcrumb %}
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
 <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
-<li class="breadcrumb-item">
-  <a href="{% url 'transaction_list' %}">Transaction List</a>
-</li>
+<li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+<li class="breadcrumb-item"><a href="{% url 'transaction_list' %}">Transactions</a></li>
 <li class="breadcrumb-item active">Add New Transaction</li>
-{% endblock breadcrumb %} {% block content %}
-<div class="container">
-  <h2>Add New Transaction</h2>
-  <div class="row">
-    <div class="col-md-6">
-      <form method="post">
-        {% csrf_token %}
-        <div class="mb-3">
-          <label for="id_date" class="form-label">Date:</label>
-          {{ form.date }} {% if form.date.errors %}
-          <div class="invalid-feedback">{{ form.date.errors|join:", " }}</div>
-          {% endif %}
-        </div>
-        <div class="mb-3">
-          <label for="id_debtor" class="form-label">Debtor:</label>
-          {{ form.debtor }} {% if form.debtor.errors %}
-          <div class="invalid-feedback">{{ form.debtor.errors|join:", " }}</div>
-          {% endif %}
-        </div>
-        <div class="mb-3">
-          <label for="id_amount" class="form-label">Amount:</label>
-          {{ form.amount }} {% if form.amount.errors %}
-          <div class="invalid-feedback">{{ form.amount.errors|join:", " }}</div>
-          {% endif %}
-        </div>
-        <div class="mb-3">
-          <label for="id_currency" class="form-label">Currency:</label>
-          {{ form.currency }} {% if form.currency.errors %}
-          <div class="invalid-feedback">
-            {{ form.currency.errors|join:", " }}
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="animated fade-in">
+    <div class="row">
+      <div class="col-md-12 mb-3">
+        <h2>Add New Transaction</h2>
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          
+          <!-- Transaction ID -->
+          <div class="form-group">
+            <label for="id_unique_id">Transaction ID:</label>
+            {{ form.unique_id }}
           </div>
-          {% endif %}
-        </div>
-        <div class="mb-3">
-          <label for="id_exchange_rate" class="form-label"
-            >Exchange Rate:</label
-          >
-          {{ form.exchange_rate }}
-          <small class="text-muted"
-            >Enter the exchange rate of the currency against Leones (SLL). For
-            example, 1.00 for Leones, or 24.5 for Dollars (1 Dollar = 24.5
-            Leones).</small
-          >
-          {% if form.exchange_rate.errors %}
-          <div class="invalid-feedback">
-            {{ form.exchange_rate.errors|join:", " }}
+
+          <!-- Date -->
+          <div class="form-group">
+            <label for="id_date">Date:</label>
+            {{ form.date }}
           </div>
-          {% endif %}
-        </div>
-        <div class="mb-3">
-          <label for="id_description" class="form-label">Description:</label>
-          {{ form.description }} {% if form.description.errors %}
-          <div class="invalid-feedback">
-            {{ form.description.errors|join:", " }}
+
+          <!-- Debtor -->
+          <div class="form-group">
+            <label for="id_debtor">Debtor:</label>
+            {{ form.debtor }}
           </div>
-          {% endif %}
-        </div>
-        <div class="mb-3">
-          <label for="id_additional_notes" class="form-label"
-            >Additional Notes:</label
-          >
-          {{ form.additional_notes }} {% if form.additional_notes.errors %}
-          <div class="invalid-feedback">
-            {{ form.additional_notes.errors|join:", " }}
+
+          <!-- Amount -->
+          <div class="form-group">
+            <label for="id_amount">Amount:</label>
+            {{ form.amount }}
           </div>
-          {% endif %}
-        </div>
-        <div class="mb-3">
-          <label for="id_receipts" class="form-label">Receipts:</label>
-          {{ form.receipts }} {% if form.receipts.errors %}
-          <div class="invalid-feedback">
-            {{ form.receipts.errors|join:", " }}
+
+          <!-- Currency -->
+          <div class="form-group">
+            <label for="id_currency">Currency:</label>
+            {{ form.currency }}
           </div>
-          {% endif %}
-        </div>
-        <div class="mb-3">
-          <button
-            type="button"
-            class="btn btn-primary"
-            id="generateTransactionIdBtn"
-          >
-            Generate Transaction ID
-          </button>
-          <input
-            type="text"
-            class="form-control"
-            id="id_transaction_id"
-            name="transaction_id"
-            readonly
-          />
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
+
+          <!-- Exchange Rate -->
+          <div class="form-group">
+            <label for="id_exchange_rate">Exchange Rate:</label>
+            {{ form.exchange_rate }}
+          </div>
+
+          <!-- Receipts Upload -->
+          <div class="form-group">
+            <label for="id_receipts">Upload Receipts:</label>
+            {{ form.receipts }}
+          </div>
+
+          <!-- Description -->
+          <div class="form-group">
+            <label for="id_description">Description:</label>
+            {{ form.description }}
+          </div>
+
+          <!-- Additional Notes -->
+          <div class="form-group">
+            <label for="id_additional_notes">Additional Notes:</label>
+            {{ form.additional_notes }}
+          </div>
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
     </div>
   </div>
 </div>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const generateTransactionIdBtn = document.getElementById(
-      "generateTransactionIdBtn"
-    );
-    const transactionIdField = document.getElementById("id_transaction_id");
-
-    generateTransactionIdBtn.addEventListener("click", function () {
-      // Send a request to generate the transaction ID
-      fetch('{% url "generate_transaction_id" %}')
-        .then((response) => response.json())
-        .then((data) => {
-          transactionIdField.value = data.transaction_id;
-        })
-        .catch((error) => {
-          console.error("Error generating transaction ID:", error);
-        });
-    });
-  });
-</script>
-
 {% endblock %}

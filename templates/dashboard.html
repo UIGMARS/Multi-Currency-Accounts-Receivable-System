@@ -102,19 +102,28 @@
     <div class="col-md-12">
       <div class="card text-white bg-dark">
         <div class="card-header">
-          <strong>Recent Transactions</strong>
+            <h5 class="mb-0">Recent Transactions</h5>
         </div>
         <div class="card-body">
-          <ul>
-            {% if recent_transactions %}
-            {% for transaction in recent_transactions %}
-            <li>
-              {{ transaction.date }} - {{ transaction.description }} - {{ transaction.amount }}
-            </li>
-            {% endfor %}
-            {% else %}
-            <p>No transactions</p>
-            {% endif %}
+            <div class="list-group">
+                {% if recent_transactions %}
+                    {% for transaction in recent_transactions %}
+                        <a href="{% url 'transaction_detail' pk=transaction.pk %}" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">{{ transaction.description }}</h5>
+                                <small>{{ transaction.date }}</small>
+                            </div>
+                            <p class="mb-1">Amount: {{ transaction.amount }}</p>
+                            <small>Debtor: {{ transaction.debtor.name }}</small>
+                        </a>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-center">No recent transactions.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
           </ul>
         </div>
       </div>
