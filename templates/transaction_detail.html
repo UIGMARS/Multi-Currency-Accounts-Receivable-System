@@ -9,22 +9,94 @@
 {% endblock breadcrumb %}
 
 {% block content %}
-    <div class="container-fluid">
-        <div class="animated fade-in">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <strong>Transaction Details</strong>
-                        </div>
-                        <div class="card-body">
-                            <p><strong>Transaction ID:</strong> {{ transaction.transaction_id }}</p>
-                            <p><strong>Date:</strong> {{ transaction.date }}</p>
-                            <p><strong>Debtor:</strong> {{ transaction.debtor }}</p>
-                            <p><strong>Amount:</strong> {{ transaction.amount }}</p>
-                            <p><strong>Currency:</strong> {{ transaction.currency }}</p>
-                            <p><strong>Payment ID:</strong> {{ transaction.payment.id }}</p>
-                        </div>
+    <style>
+        .table-bordered th,
+        .table-bordered td {
+            border: 1px solid #dee2e6;
+        }
+    </style>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Transaction Summary Card -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title mb-0">Transaction Summary</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th scope="row" class="w-25">Transaction ID:</th>
+                                    <td>{{ transaction.unique_id }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="w-25">Date:</th>
+                                    <td>{{ transaction.date }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="w-25">Debtor:</th>
+                                    <td><a href="{% url 'debtor_detail' transaction.debtor.unique_id %}">{{ transaction.debtor.name }}</a></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="w-25">Description:</th>
+                                    <td>{{ transaction.description }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="w-25">Amount:</th>
+                                    <td>{{ transaction.amount }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="w-25">Currency:</th>
+                                    <td>{{ transaction.get_currency_display }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="w-25">Exchange Rate:</th>
+                                    <td>{{ transaction.exchange_rate }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <!-- Additional Details Card -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title mb-0">Additional Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th scope="row" class="w-50">Receipt:</th>
+                                    <td><a href="{{ transaction.receipts.url }}" target="_blank">View Receipt</a></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="w-50">Additional Notes:</th>
+                                    <td>{{ transaction.additional_notes }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="w-50">Additional Information:</th>
+                                    <td>{{ transaction.additional_information }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Remaining Balance -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title mb-0">Remaining Balance</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>Total Outstanding Debt: {{ transaction.debtor.get_remaining_balance }}</p>
                     </div>
                 </div>
             </div>

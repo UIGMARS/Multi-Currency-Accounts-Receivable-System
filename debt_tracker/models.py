@@ -2,6 +2,8 @@ import uuid
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from datetime import datetime
+from django.utils import timezone
 
 class Debtor(models.Model):
     name = models.CharField(max_length=100)
@@ -38,16 +40,24 @@ class Transaction(models.Model):
     debtor = models.ForeignKey(Debtor, on_delete=models.CASCADE, default=1)  # Set default debtor to 1
     amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default='SLL')
-    transaction_id = models.CharField(max_length=50, blank=True, unique=True)
+    unique_id = models.CharField(max_length=10, unique=True)
 
-    def generate_transaction_id(self):
-        self.transaction_id = uuid.uuid4().hex
+    def generate_unique_id(self):
+        # Generate a unique ID with "uig" prefix followed by a combination of letters and numbers
+        # Use current date for uniqueness
+        date_part = timezone.now().strftime('%y%m%d')
+        unique_part = uuid.uuid4().hex[:6]  # Take the first 6 characters of a UUID
+        unique_id = f'uig{date_part}{unique_part}'[:10]  # Truncate the generated ID to fit within 10 characters
+        return unique_id
 
-    additional_information = models.TextField(default='')
+    def save(self, *args, **kwargs):
+        if not self.unique_id:
+            self.unique_id = self.generate_unique_id()
+        super().save(*args, **kwargs)
 
     @staticmethod
     def default_debtor():
-        return Debtor.objects.first()  # Get the first debtor in the database
+        return Debtor.objects.first()
 
 # Set default debtor for existing rows after migration
 @receiver(post_save, sender=Transaction)

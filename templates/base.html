@@ -33,11 +33,19 @@
     ></script>
 
     <!-- Link Styles -->
+<<<<<<< HEAD
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
   </head>
   <body>
     <div class="wrapper">
       <aside id="sidebar" class="js-sidebar">
+=======
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+</head>
+<body>
+<div class="wrapper">
+    <aside id="sidebar" class="js-sidebar">
+>>>>>>> 743d30ad78db7aa98cbba0757fa37229b21bfc3b
         <!-- Content For Sidebar -->
         <div class="h-100">
           <div class="sidebar-logo">
@@ -73,6 +81,7 @@
                   >
                 </li>
                 <li class="sidebar-item">
+<<<<<<< HEAD
                   <a href="{% url 'add_debtor' %}" class="sidebar-link">
                     Add Debtors</a
                   >
@@ -103,6 +112,51 @@
                 </li>
                 <li class="sidebar-item">
                   <a href="#" class="sidebar-link">Transaction Details</a>
+=======
+                    <a href="#" class="sidebar-link collapsed" data-bs-target="#debtors" data-bs-toggle="collapse"
+                       aria-expanded="false">
+                        <i class="fa-solid fa-user pe-2"></i>
+                        Debtors
+                    </a>
+                    <ul id="debtors" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-subitem">
+                            <a href="{% url 'debtor_list' %}" class="sidebar-link"><i class="fa-solid fa-users pe-2"></i>Debtors</a>
+                        </li>
+                        <li class="sidebar-subitem">
+                            <a href="{% url 'add_debtor' %}" class="sidebar-link"><i class="fa-solid fa-plus pe-2"></i>Add New Debtor</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed" data-bs-target="#transactions" data-bs-toggle="collapse"
+                       aria-expanded="false">
+                        <i class="fas fa-exchange-alt pe-2"></i>
+                        Transactions
+                    </a>
+                    <ul id="transactions" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-subitem">
+                            <a href="{% url 'transaction_list' %}" class="sidebar-link"><i class="fas fa-list-alt pe-2"></i>Transactions</a>
+                        </li>
+                        <li class="sidebar-subitem">
+                            <a href="{% url 'add_transaction' %}" class="sidebar-link"><i class="fas fa-plus pe-2"></i>Add New Transaction</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed" data-bs-target="#users" data-bs-toggle="collapse"
+                       aria-expanded="false">
+                        <i class="fa-regular fa-user pe-2"></i>
+                        Users
+                    </a>
+                    <ul id="users" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-subitem">
+                            <a href="#" class="sidebar-link"><i class="fa-regular fa-users pe-2"></i>Users</a>
+                        </li>
+                        <li class="sidebar-subitem">
+                            <a href="#" class="sidebar-link"><i class="fa-regular fa-user-plus pe-2"></i>Add New User</a>
+                        </li>
+                    </ul>
+>>>>>>> 743d30ad78db7aa98cbba0757fa37229b21bfc3b
                 </li>
                 <li class="sidebar-item">
                   <a href="#" class="sidebar-link">Transaction List</a>

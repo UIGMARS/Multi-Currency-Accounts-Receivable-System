@@ -1,7 +1,13 @@
-{% extends 'base.html' %} {% load static %} {% block breadcrumb %}
+{% extends 'base.html' %} 
+{% load static %} 
+
+{% block breadcrumb %}
 <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+<li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
 <li class="breadcrumb-item">Transactions</li>
-{% endblock breadcrumb %} {% block content %}
+{% endblock breadcrumb %} 
+
+{% block content %}
 <div class="container-fluid">
   <div class="animated fade-in">
     <div class="row mb-3">
@@ -20,7 +26,6 @@
             <th>Amount</th>
             <th>Currency</th>
             <th>Actions</th>
-            <!-- New column for actions -->
           </tr>
         </thead>
         <tbody>
@@ -31,17 +36,15 @@
             <td>{{ transaction.amount }}</td>
             <td>{{ transaction.get_currency_display }}</td>
             <td>
-              <!-- Actions column -->
-              <a href="{% url 'index' %}" class="btn btn-primary btn-sm">
-                <i class="fas fa-edit"></i>
+              <a href="{% url 'transaction_detail' pk=transaction.pk %}" class="btn btn-primary btn-sm">
+                <i class="fas fa-eye"></i>
               </a>
-              <button
-                type="button"
-                class="btn btn-danger btn-sm delete-transaction-btn"
-                data-transaction-id="{{ transaction.id }}"
-              >
-                <i class="fas fa-trash-alt"></i>
-              </button>
+              <a href="{% url 'edit_transaction' pk=transaction.pk %}" class="btn btn-info btn-sm">
+                <i class="fas fa-pencil-alt"></i>
+              </a>
+              <button type="button" class="btn btn-danger btn-sm delete-transaction-btn" data-transaction-id="{{ transaction.id }}">
+                <i class="fas fa-trash"></i>
+            </button>
             </td>
           </tr>
           {% empty %}
@@ -54,72 +57,82 @@
     </div>
   </div>
 </div>
-{% endblock %}
 
-<!-- Confirmation Modal -->
-<div
-  class="modal fade"
-  id="deleteTransactionConfirmationModal"
-  tabindex="-1"
-  aria-labelledby="deleteTransactionConfirmationModalLabel"
-  aria-hidden="true"
->
+<!-- Upload Receipt Modal -->
+<div class="modal fade" id="uploadReceiptModal" tabindex="-1" aria-labelledby="uploadReceiptModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="deleteTransactionConfirmationModalLabel">
-          Confirm Deletion
-        </h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <h5 class="modal-title" id="uploadReceiptModalLabel">Upload Receipt</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Add your upload receipt form here -->
+        <!-- Example: <form method="POST" enctype="multipart/form-data">...</form> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div class="modal fade" id="deleteTransactionConfirmationModal" tabindex="-1" aria-labelledby="deleteTransactionConfirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteTransactionConfirmationModalLabel">Confirm Deletion</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         Are you sure you want to delete this transaction?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Cancel
-        </button>
-        <button
-          type="button"
-          class="btn btn-danger"
-          id="confirmDeleteTransactionBtn"
-        >
-          Delete
-        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteTransactionBtn">Delete</button>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const deleteTransactionBtns = document.querySelectorAll(
-      ".delete-transaction-btn"
-    );
-    const confirmDeleteTransactionBtn = document.getElementById(
-      "confirmDeleteTransactionBtn"
-    );
+  document.addEventListener('DOMContentLoaded', function() {
+    const deleteTransactionBtns = document.querySelectorAll('.delete-transaction-btn');
+    const confirmDeleteTransactionBtn = document.getElementById('confirmDeleteTransactionBtn');
 
     let transactionIdToDelete = null;
 
-    deleteTransactionBtns.forEach((btn) => {
-      btn.addEventListener("click", function () {
-        transactionIdToDelete = this.getAttribute("data-transaction-id");
-        console.log("Transaction ID to delete:", transactionIdToDelete); // Log the transaction ID
-        $("#deleteTransactionConfirmationModal").modal("show");
-      });
+    deleteTransactionBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            transactionIdToDelete = this.getAttribute('data-transaction-id');
+            console.log('Transaction ID to delete:', transactionIdToDelete); // Log the transaction ID
+            $('#deleteTransactionConfirmationModal').modal('show');
+        });
     });
 
-    confirmDeleteTransactionBtn.addEventListener("click", function () {
-      if (transactionIdToDelete) {
-        // Redirect to the delete view with the transaction id
-        window.location.href = `/delete-transaction/${transactionIdToDelete}`;
-      }
+    confirmDeleteTransactionBtn.addEventListener('click', function() {
+        if (transactionIdToDelete) {
+            // Send AJAX request to delete the transaction
+            fetch(`/delete-transaction/${transactionIdToDelete}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Reload the page after successful deletion
+                    window.location.reload();
+                } else {
+                    // Handle error response
+                    console.error('Error:', response);
+                    alert('Failed to delete transaction. Please try again later.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An unexpected error occurred. Please try again later.');
+            });
+        }
     });
-  });
+});
 </script>
+{% endblock %}

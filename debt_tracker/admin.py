@@ -11,4 +11,4 @@ class DebtorAdmin(admin.ModelAdmin):
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
-    list_display = ('description', 'date', 'exchange_rate', 'receipts', 'additional_notes', 'debtor', 'amount', 'currency', 'transaction_id', 'additional_information')
+    list_display = ('description', 'date', 'exchange_rate', 'receipts', 'additional_notes', 'debtor', 'amount', 'currency')
