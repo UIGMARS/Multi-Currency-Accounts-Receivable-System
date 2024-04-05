@@ -50,6 +50,14 @@
                                         <td>{{ debtor.address }}</td>
                                     </tr>
                                     <tr>
+                                        <th class="w-25">Unique ID:</th>
+                                        <td>{{ debtor.unique_id }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="w-25">Notes:</th>
+                                        <td>{{ debtor.notes | truncatechars:30 }}</td>
+                                    </tr>
+                                    <tr>
                                         <th class="w-25">Outstanding Balance:</th>
                                         <td>
                                             <span id="outstanding-balance">{{ debtor.get_remaining_balance }}</span>
@@ -60,6 +68,8 @@
                             </table>
                         </div>
                     </div>
+                    <!-- Add Transaction Button -->
+                    <a href="{% url 'add_transaction' %}" class="btn btn-primary">Add Transaction</a>
                 </div>
                 <div class="col-md-6">
                     <!-- Payment History Card -->
@@ -97,5 +107,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>    
 {% endblock %}

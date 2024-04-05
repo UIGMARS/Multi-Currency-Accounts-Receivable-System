@@ -58,9 +58,9 @@
           <p class="card-text font-weight-bold">
             {{ total_outstanding_debt }}
           </p>
-          <p class="card-label">Total Outstanding Debt</p>
+          <p class="card-label">Total Outstanding Debt (UNDER CONSTRUCTION)</p>
         </div>
-        <a href="{% url 'debtor_list' %}" class="text-decoration-none">
+        <a href="{% url 'outstanding_debt_summary' %}" class="text-decoration-none">
           <div class="card-footer bg-info-light">
             More info <i class="fas fa-chevron-circle-right float-right card-icon"></i>
           </div>
@@ -88,9 +88,9 @@
           <p class="card-text font-weight-bold">
             {{ total_collected }}
           </p>
-          <p class="card-label">Total Amount Collected</p>
+          <p class="card-label">Total Amount Collected (UNDER CONSTURCTION)</p>
         </div>
-        <a href="{% url 'transaction_list' %}" class="text-decoration-none">
+        <a href="{% url 'collection_summary' %}" class="text-decoration-none">
           <div class="card-footer bg-warning-light">
             More info <i class="fas fa-chevron-circle-right float-right card-icon"></i>
           </div>

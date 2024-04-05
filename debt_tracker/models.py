@@ -4,6 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from datetime import datetime
 from django.utils import timezone
+from django.db.models import Sum
 
 class Debtor(models.Model):
     name = models.CharField(max_length=100)
@@ -18,12 +19,8 @@ class Debtor(models.Model):
         return self.name  # Customize to display the debtor's name in the dropdown
 
     def get_remaining_balance(self):
-        if self.transaction_set.exists():
-            payments_total = sum(transaction.amount for transaction in self.transaction_set.all())
-            remaining_balance = payments_total
-        else:
-            remaining_balance = self.total_debt
-        
+        total_payments = self.transaction_set.aggregate(total=Sum('amount'))['total'] or 0
+        remaining_balance = self.total_debt - total_payments
         return remaining_balance
 
 class Transaction(models.Model):

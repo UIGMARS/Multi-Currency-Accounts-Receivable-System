@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Total Amount Collected: {{ total_amount_collected }}</h1>
+    <h2>Debtor Collection Breakdown:</h2>
+    <ul>
+        {% for debtor in debtor_breakdown %}
+            <li>{{ debtor.name }}: {{ debtor.amount_collected }}</li>
+        {% endfor %}
+    </ul>
+    <!-- Add your graphical representation here (e.g., Chart.js) -->
+</div>
+{% endblock %}

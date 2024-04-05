@@ -18,20 +18,41 @@
       </div>
     </div>
     <div class="row">
+      <div class="col-md-6 mb-3"> <!-- Adjust the column width as needed -->
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Filter by:</span>
+          </div>
+          <select class="form-select" id="filterCriteria">
+            <option value="date">Date</option>
+            <option value="debtor">Debtor</option>
+            <option value="currency">Currency</option>
+            <option value="transaction_id">Transaction ID</option>
+          </select>
+          <div id="filterInputWrapper" class="input-group-append">
+            <!-- Dynamic input field will be added here -->
+          </div>
+          <button class="btn btn-primary" id="filterBtn">Filter</button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
       <table class="table table-responsive-sm table-hover table-outline mb-5">
         <thead class="thead-light">
           <tr>
             <th>Date</th>
+            <th>Transaction ID</th>
             <th>Debtor</th>
             <th>Amount</th>
             <th>Currency</th>
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="transactionTableBody">
           {% for transaction in transactions %}
           <tr>
             <td>{{ transaction.date }}</td>
+            <td>{{ transaction.unique_id }}</td>
             <td>{{ transaction.debtor.name }}</td>
             <td>{{ transaction.amount }}</td>
             <td>{{ transaction.get_currency_display }}</td>
@@ -44,7 +65,7 @@
               </a>
               <button type="button" class="btn btn-danger btn-sm delete-transaction-btn" data-transaction-id="{{ transaction.id }}">
                 <i class="fas fa-trash"></i>
-            </button>
+              </button>
             </td>
           </tr>
           {% empty %}
@@ -55,22 +76,24 @@
         </tbody>
       </table>
     </div>
-  </div>
-</div>
+    <!-- Pagination links -->
+    <div class="pagination">
+       <span class="step-links">
+           {% if transactions.has_previous %}
+               <a href="?page=1">&laquo; first</a>
+               <a href="?page={{ transactions.previous_page_number }}">previous</a>
+           {% endif %}
 
-<!-- Upload Receipt Modal -->
-<div class="modal fade" id="uploadReceiptModal" tabindex="-1" aria-labelledby="uploadReceiptModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="uploadReceiptModalLabel">Upload Receipt</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!-- Add your upload receipt form here -->
-        <!-- Example: <form method="POST" enctype="multipart/form-data">...</form> -->
-      </div>
-    </div>
+           <span class="current">
+               Page {{ transactions.number }} of {{ transactions.paginator.num_pages }}.
+           </span>
+
+           {% if transactions.has_next %}
+               <a href="?page={{ transactions.next_page_number }}">next</a>
+               <a href="?page={{ transactions.paginator.num_pages }}">last &raquo;</a>
+           {% endif %}
+       </span>
+   </div>
   </div>
 </div>
 
@@ -95,6 +118,60 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    // Function to create currency dropdown
+    function createCurrencyDropdown() {
+        const currencyDropdown = document.createElement('select');
+        currencyDropdown.className = 'form-select';
+        currencyDropdown.innerHTML = '<option value="">Select Currency</option>'; // Add default option
+        const currencies = ['Leones', 'Dollars', 'Pounds']; // Replace with actual currency list from the system
+        currencies.forEach(currency => {
+            const option = document.createElement('option');
+            option.value = currency;
+            option.textContent = currency;
+            currencyDropdown.appendChild(option);
+        });
+        return currencyDropdown;
+    }
+
+    // Function to create date dropdowns
+    function createDateDropdowns() {
+        const yearDropdown = document.createElement('select');
+        yearDropdown.className = 'form-select';
+        yearDropdown.setAttribute('id', 'yearDropdown'); // Added id attribute
+        yearDropdown.innerHTML = '<option value="">Year</option>'; // Add default option
+        for (let year = 2020; year <= 2030; year++) { // Change the range as needed
+            const option = document.createElement('option');
+            option.value = year;
+            option.textContent = year;
+            yearDropdown.appendChild(option);
+        }
+
+        const monthDropdown = document.createElement('select');
+        monthDropdown.className = 'form-select';
+        monthDropdown.setAttribute('id', 'monthDropdown'); // Added id attribute
+        monthDropdown.innerHTML = '<option value="">Month</option>'; // Add default option
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        months.forEach((month, index) => {
+            const option = document.createElement('option');
+            option.value = index + 1;
+            option.textContent = month;
+            monthDropdown.appendChild(option);
+        });
+
+        const dayDropdown = document.createElement('select');
+        dayDropdown.className = 'form-select';
+        dayDropdown.setAttribute('id', 'dayDropdown'); // Added id attribute
+        dayDropdown.innerHTML = '<option value="">Day</option>'; // Add default option
+        for (let day = 1; day <= 31; day++) { // Add days from 1 to 31
+            const option = document.createElement('option');
+            option.value = day;
+            option.textContent = day;
+            dayDropdown.appendChild(option);
+        }
+
+        return [yearDropdown, monthDropdown, dayDropdown];
+    }
+
     const deleteTransactionBtns = document.querySelectorAll('.delete-transaction-btn');
     const confirmDeleteTransactionBtn = document.getElementById('confirmDeleteTransactionBtn');
 
@@ -133,6 +210,102 @@
             });
         }
     });
+
+    // Event listener for filter criteria change
+    const filterCriteriaSelect = document.getElementById('filterCriteria');
+    filterCriteriaSelect.addEventListener('change', function() {
+        const filterCriteria = this.value;
+        const filterInputWrapper = document.getElementById('filterInputWrapper');
+        filterInputWrapper.innerHTML = ''; // Clear previous input fields
+
+        if (filterCriteria === 'date') {
+            // Add date dropdowns
+            const dateDropdowns = createDateDropdowns();
+            dateDropdowns.forEach(dropdown => {
+                filterInputWrapper.appendChild(dropdown);
+            });
+        } else if (filterCriteria === 'currency') {
+            // Add currency dropdown
+            const currencyDropdown = createCurrencyDropdown();
+            filterInputWrapper.appendChild(currencyDropdown);
+        } else {
+            // Add regular text input field
+            const filterInput = document.createElement('input');
+            filterInput.type = 'text';
+            filterInput.className = 'form-control';
+            filterInput.placeholder = 'Enter search term';
+            filterInput.setAttribute('id', 'filterInput'); // Added id attribute
+            filterInputWrapper.appendChild(filterInput);
+        }
+    });
+
+    // Filter button click event listener
+    document.getElementById('filterBtn').addEventListener('click', function() {
+        const filterCriteria = document.getElementById('filterCriteria').value;
+        let filterValue;
+
+        if (filterCriteria === 'date') {
+            // Construct date string
+            const year = document.getElementById('yearDropdown').value;
+            const month = document.getElementById('monthDropdown').value.padStart(2, '0'); // Ensure two-digit month
+            const day = document.getElementById('dayDropdown').value.padStart(2, '0'); // Ensure two-digit day
+            
+            if (!year) {
+                // If year is empty, set filter value to empty string to show all records
+                filterValue = '';
+            } else if (!month && !day) {
+                // If month and day are empty, show all records for the year
+                filterValue = year;
+            } else if (!day) {
+                // If day is empty, show records for the selected year and month
+                filterValue = `${year}-${month}-01 TO ${year}-${month}-31`;
+            } else {
+                // Construct filter value based on selected date components
+                filterValue = `${year}-${month}-${day}`;
+            }
+        } else if (filterCriteria === 'currency') {
+            // Get selected currency value
+            filterValue = document.getElementById('filterInputWrapper').querySelector('select').value.toLowerCase();
+        } else {
+            // Get text input value
+            filterValue = document.getElementById('filterInputWrapper').querySelector('input').value.toLowerCase();
+        }
+
+        console.log('Filter Criteria:', filterCriteria);
+        console.log('Filter Value:', filterValue);
+
+        // Get all transaction rows
+        const transactionRows = document.querySelectorAll('#transactionTableBody tr');
+
+        // Loop through each transaction row and check if it matches the filter criteria
+        transactionRows.forEach(row => {
+            const dateCell = row.cells[0].textContent.toLowerCase();
+            const transactionIdCell = row.cells[1].textContent.toLowerCase();
+            const debtorCell = row.cells[2].textContent.toLowerCase();
+            const amountCell = row.cells[3].textContent.toLowerCase();
+            const currencyCell = row.cells[4].textContent.toLowerCase();
+
+            let match = false;
+
+            // Check if the row matches the filter criteria based on the selected filter
+            if (filterCriteria === 'date' && dateCell.includes(filterValue)) {
+                match = true;
+            } else if (filterCriteria === 'debtor' && debtorCell.includes(filterValue)) {
+                match = true;
+            } else if (filterCriteria === 'currency' && currencyCell.includes(filterValue)) {
+                match = true;
+            } else if (filterCriteria === 'transaction_id' && transactionIdCell.includes(filterValue)) {
+                match = true;
+            } else if (filterCriteria === 'amount' && amountCell.includes(filterValue)) {
+                match = true;
+            }
+            // Toggle row display based on match
+            row.style.display = match ? '' : 'none';
+        });
+    });
+
+    // Trigger change event on filter criteria select to ensure dropdowns are shown on page load
+    filterCriteriaSelect.dispatchEvent(new Event('change'));
 });
 </script>
 {% endblock %}

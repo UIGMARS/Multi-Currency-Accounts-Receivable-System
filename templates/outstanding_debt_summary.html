@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="mb-4">Total Outstanding Debt: {{ total_outstanding_debt }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="mb-3">Debtor Breakdown:</h2>
+            <ul class="list-group">
+                {% for debtor in debtor_breakdown %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>{{ debtor.name }}</span>
+                        <span class="badge bg-primary rounded-pill">{{ debtor.outstanding_debt }}</span>
+                        {% if debtor.id %}
+                            <a href="{% url 'detailed_transaction_history' debtor.id %}" class="btn btn-primary btn-sm">View Details</a>
+                        {% else %}
+                            <span class="text-muted">No details available</span>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

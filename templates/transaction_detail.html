@@ -85,6 +85,9 @@
                         </table>
                     </div>
                 </div>
+                
+                <!-- Generate Receipt Button -->
+                <a href="{% url 'generate_receipt_pdf' transaction.unique_id %}" class="btn btn-primary" target="_blank">Generate Receipt</a>
             </div>
         </div>
         

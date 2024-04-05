@@ -9,71 +9,235 @@
 
 {% block content %}
 <div class="container-fluid">
-  <div class="animated fade-in">
-    <div class="row">
-      <div class="col-md-12 mb-3">
-        <h2>Add New Transaction</h2>
-        <form method="post" enctype="multipart/form-data">
-          {% csrf_token %}
-          
-          <!-- Transaction ID -->
-          <div class="form-group">
-            <label for="id_unique_id">Transaction ID:</label>
-            {{ form.unique_id }}
-          </div>
+    <div class="animated fade-in">
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <h2>Add New Transaction</h2>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
 
-          <!-- Date -->
-          <div class="form-group">
-            <label for="id_date">Date:</label>
-            {{ form.date }}
-          </div>
+                    <!-- Transaction ID -->
+                    <div class="form-group">
+                        <label for="id_unique_id">Transaction ID:</label>
+                        {{ form.unique_id }}
+                    </div>
 
-          <!-- Debtor -->
-          <div class="form-group">
-            <label for="id_debtor">Debtor:</label>
-            {{ form.debtor }}
-          </div>
+                    <!-- Date -->
+                    <div class="form-group">
+                        <label for="id_date">Date:</label>
+                        {{ form.date }}
+                    </div>
 
-          <!-- Amount -->
-          <div class="form-group">
-            <label for="id_amount">Amount:</label>
-            {{ form.amount }}
-          </div>
+                    <!-- Debtor -->
+                    <div class="form-group">
+                        <label for="id_debtor">Debtor:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="id_debtor">Select Debtor</label>
+                            </div>
+                            <select class="custom-select" id="id_debtor" name="debtor">
+                                <option selected disabled>Select debtor</option>
+                                <!-- Populate options dynamically using JavaScript -->
+                            </select>
+                            <!-- Add button to create new debtor -->
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-outline-secondary" id="createDebtorBtn">Create New Debtor</button>
+                            </div>
+                        </div>
+                        <!-- Display outstanding balance here -->
+                        <div id="outstandingBalance"></div>
+                    </div>
 
-          <!-- Currency -->
-          <div class="form-group">
-            <label for="id_currency">Currency:</label>
-            {{ form.currency }}
-          </div>
+                    <!-- Amount -->
+                    <div class="form-group">
+                        <label for="id_amount">Amount:</label>
+                        {{ form.amount }}
+                    </div>
 
-          <!-- Exchange Rate -->
-          <div class="form-group">
-            <label for="id_exchange_rate">Exchange Rate:</label>
-            {{ form.exchange_rate }}
-          </div>
+                    <!-- Currency -->
+                    <div class="form-group">
+                        <label for="id_currency">Currency:</label>
+                        {{ form.currency }}
+                    </div>
 
-          <!-- Receipts Upload -->
-          <div class="form-group">
-            <label for="id_receipts">Upload Receipts:</label>
-            {{ form.receipts }}
-          </div>
+                    <!-- Exchange Rate -->
+                    <div class="form-group">
+                        <label for="id_exchange_rate">Exchange Rate:</label>
+                        {{ form.exchange_rate }}
+                    </div>
 
-          <!-- Description -->
-          <div class="form-group">
-            <label for="id_description">Description:</label>
-            {{ form.description }}
-          </div>
+                    <!-- Receipts Upload -->
+                    <div class="form-group">
+                        <label for="id_receipts">Upload Receipts:</label>
+                        {{ form.receipts }}
+                    </div>
 
-          <!-- Additional Notes -->
-          <div class="form-group">
-            <label for="id_additional_notes">Additional Notes:</label>
-            {{ form.additional_notes }}
-          </div>
+                    <!-- Description -->
+                    <div class="form-group">
+                        <label for="id_description">Description:</label>
+                        {{ form.description }}
+                    </div>
 
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-      </div>
+                    <!-- Additional Notes -->
+                    <div class="form-group">
+                        <label for="id_additional_notes">Additional Notes:</label>
+                        {{ form.additional_notes }}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
     </div>
+</div>
+
+<!-- Add New Debtor Modal -->
+<div class="modal fade" id="addDebtorModal" tabindex="-1" role="dialog" aria-labelledby="addDebtorModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="addDebtorModalLabel">Add New Debtor</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <!-- Add debtor form -->
+              <form id="addDebtorForm" method="post" action="{% url 'add_debtor' %}">
+                  {% csrf_token %}
+                  <!-- Debtor Name -->
+                  <div class="form-group">
+                      <label for="debtorName">Name:</label>
+                      <input type="text" class="form-control" id="debtorName" name="name" required>
+                  </div>
+                  <!-- Phone Number -->
+                  <div class="form-group">
+                      <label for="debtorPhoneNumber">Phone Number:</label>
+                      <input type="text" class="form-control" id="debtorPhoneNumber" name="phone_number" required>
+                  </div>
+                  <!-- Email -->
+                  <div class="form-group">
+                      <label for="debtorEmail">Email:</label>
+                      <input type="email" class="form-control" id="debtorEmail" name="email" required>
+                  </div>
+                  <!-- Address -->
+                  <div class="form-group">
+                      <label for="debtorAddress">Address:</label>
+                      <textarea class="form-control" id="debtorAddress" name="address" rows="3" required></textarea>
+                  </div>
+                  <!-- Unique ID -->
+                  <div class="form-group">
+                      <label for="debtorUniqueId">Unique ID:</label>
+                      <input type="text" class="form-control" id="debtorUniqueId" name="unique_id" required>
+                  </div>
+                  <!-- Total Debt -->
+                  <div class="form-group">
+                      <label for="debtorTotalDebt">Total Debt:</label>
+                      <input type="number" class="form-control" id="debtorTotalDebt" name="total_debt" value="0" required>
+                  </div>
+                  <!-- Additional Notes -->
+                  <div class="form-group">
+                      <label for="debtorNotes">Notes:</label>
+                      <textarea class="form-control" id="debtorNotes" name="notes" rows="3"></textarea>
+                  </div>
+                  <!-- Add Debtor and Cancel buttons -->
+                  <button type="submit" class="btn btn-primary">Add Debtor</button>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              </form>
+          </div>
+      </div>
   </div>
 </div>
+
+
+
+<!-- Your existing content goes here -->
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      // Fetch debtors when the document is loaded
+      fetchDebtors();
+
+      // Add event listener to create debtor button
+      document.getElementById('createDebtorBtn').addEventListener('click', function () {
+          // Show the add debtor modal
+          $('#addDebtorModal').modal('show');
+      });
+
+      // Add event listener to debtor select field
+      document.getElementById('id_debtor').addEventListener('change', function () {
+          var debtorId = this.value; // Get the selected debtor's ID
+          if (debtorId) { // Check if a debtor is selected
+              fetchDebtorBalance(debtorId); // Fetch debtor's balance
+          } else {
+              // Clear the outstanding balance if no debtor is selected
+              document.getElementById('outstandingBalance').innerText = '';
+          }
+      });
+
+      // Add event listener to the add debtor form submission
+      document.getElementById('addDebtorForm').addEventListener('submit', function (event) {
+          event.preventDefault(); // Prevent the default form submission behavior
+
+          // Perform form submission via AJAX
+          var form = this;
+          var formData = new FormData(form);
+          fetch(form.action, {
+              method: 'POST',
+              body: formData,
+              headers: {
+                  'X-CSRFToken': '{{ csrf_token }}'
+              }
+          })
+          .then(response => {
+              if (response.ok) {
+                  // Close the modal
+                  $('#addDebtorModal').modal('hide');
+                  // Display a notice that a new debtor has been added successfully
+                  // You can customize this notice according to your design
+                  alert('New debtor added successfully');
+                  // Optionally, you can fetch debtors again to update the dropdown list
+                  fetchDebtors();
+              } else {
+                  throw new Error('Error adding new debtor');
+              }
+          })
+          .catch(error => {
+              console.error('Error adding new debtor:', error);
+              // Handle error if necessary
+          });
+      });
+  });
+
+  // Function to fetch debtors via AJAX
+  function fetchDebtors() {
+      fetch('/get_debtors/') // Assuming you have a URL endpoint to fetch debtors
+          .then(response => response.json())
+          .then(data => {
+              // Clear existing options
+              var debtorSelect = document.getElementById('id_debtor');
+              debtorSelect.innerHTML = '<option value="">Select debtor</option>';
+
+              // Populate options with debtor names and IDs
+              data.debtors.forEach(debtor => {
+                  var option = document.createElement('option');
+                  option.value = debtor.id; // Use debtor ID as the value for the option
+                  option.textContent = debtor.name;
+                  debtorSelect.appendChild(option);
+              });
+          })
+          .catch(error => console.error('Error fetching debtors:', error));
+  }
+
+  // Function to fetch debtor balance via AJAX
+  function fetchDebtorBalance(debtorId) {
+      fetch(`/get_debtor_balance/${debtorId}/`) // Assuming you have a URL endpoint to fetch debtor balance
+          .then(response => response.json())
+          .then(data => {
+              // Update the UI to display the fetched balance
+              document.getElementById('outstandingBalance').innerText = `Outstanding Balance: ${data.balance}`;
+          })
+          .catch(error => console.error('Error fetching debtor balance:', error));
+  }
+</script>
 {% endblock %}

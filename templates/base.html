@@ -68,12 +68,14 @@
                 data-bs-parent="#sidebar"
               >
                 <li class="sidebar-item">
-                  <a href="{% url 'debtor_detail' %}" class="sidebar-link"
-                    >Debtor Details</a
+                  <a href="{% url 'debtor_list' %}" class="sidebar-link">
+                    <i class="fas fa-list pl-4 pr-2"></i>
+                    Debtor List</a
                   >
                 </li>
                 <li class="sidebar-item">
                   <a href="{% url 'add_debtor' %}" class="sidebar-link">
+                    <i class="fas fa-plus pl-4 pr-2"></i>
                     Add Debtors</a
                   >
                 </li>
@@ -96,16 +98,14 @@
                 data-bs-parent="#sidebar"
               >
                 <li class="sidebar-item">
-                  <a href="#" class="sidebar-link">Transaction </a>
+                  <a href="{% url 'transaction_list' %}" class="sidebar-link"
+                    ><i class="fas fa-list pl-4 pr-2"></i>Transaction List
+                  </a>
                 </li>
                 <li class="sidebar-item">
-                  <a href="#" class="sidebar-link">Add Transaction</a>
-                </li>
-                <li class="sidebar-item">
-                  <a href="#" class="sidebar-link">Transaction Details</a>
-                </li>
-                <li class="sidebar-item">
-                  <a href="#" class="sidebar-link">Transaction List</a>
+                  <a href="{% url 'add_transaction' %}" class="sidebar-link"
+                    ><i class="fas fa-plus pl-4 pr-2"></i>Add Transaction</a
+                  >
                 </li>
               </ul>
             </li>
@@ -126,10 +126,16 @@
                 data-bs-parent="#sidebar"
               >
                 <li class="sidebar-item">
-                  <a href="#" class="sidebar-link">Add User</a>
+                  <a href="#" class="sidebar-link">
+                    <i class="fas fa-list pl-4 pr-2"></i>
+                    User List</a
+                  >
                 </li>
                 <li class="sidebar-item">
-                  <a href="#" class="sidebar-link">User List</a>
+                  <a href="#" class="sidebar-link">
+                    <i class="fas fa-plus pl-4 pr-2"></i>
+                    Add User</a
+                  >
                 </li>
               </ul>
             </li>
