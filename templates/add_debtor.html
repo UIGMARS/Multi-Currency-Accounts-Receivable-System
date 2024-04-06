@@ -68,6 +68,16 @@
           </div>
           {% endif %}
         </div>
+        <!-- Add Currency Field -->
+        <div class="mb-3">
+          <label for="id_debt_currency" class="form-label">Debt Currency:</label>
+          {{ form.debt_currency }}
+          {% if form.debt_currency.errors %}
+          <div class="invalid-feedback">
+            {{ form.debt_currency.errors|join:", " }}
+          </div>
+          {% endif %}
+        </div>
         <div class="mb-3">
           <label for="id_notes" class="form-label">Notes:</label>
           {{ form.notes }}

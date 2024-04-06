@@ -63,8 +63,12 @@
                     <!-- Exchange Rate -->
                     <div class="form-group">
                         <label for="id_exchange_rate">Exchange Rate:</label>
-                        {{ form.exchange_rate }}
+                        <input type="number" class="form-control" id="id_exchange_rate" name="exchange_rate" step="0.01" required>
+                        <!-- Instruction for Exchange Rate -->
+                        <small class="text-muted">Please enter the exchange rate as a number so that: 1 (Base Currency) equals how much (Transaction Currency)</small>
                     </div>
+
+
 
                     <!-- Receipts Upload -->
                     <div class="form-group">

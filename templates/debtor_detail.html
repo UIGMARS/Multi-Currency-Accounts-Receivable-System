@@ -19,6 +19,9 @@
         .table-bordered td {
             border: 1px solid #dee2e6;
         }
+        .card {
+            overflow-x: auto;
+        }
     </style>
     
     <div class="container-fluid">
@@ -39,7 +42,7 @@
                                     </tr>
                                     <tr>
                                         <th class="w-25">Phone:</th>
-                                        <td>{{ debtor.phone }}</td>
+                                        <td>{{ debtor.phone_number }}</td>
                                     </tr>
                                     <tr>
                                         <th class="w-25">Email:</th>
@@ -61,9 +64,11 @@
                                         <th class="w-25">Outstanding Balance:</th>
                                         <td>
                                             <span id="outstanding-balance">{{ debtor.get_remaining_balance }}</span>
+                                            {{ debtor.debt_currency }} <!-- Display debtor currency -->
                                             <input type="number" id="new-balance-input" class="form-control d-none" />
                                         </td>
                                     </tr>
+                                    <!-- Remove row for debtor currency -->
                                 </tbody>
                             </table>
                         </div>
@@ -72,10 +77,10 @@
                     <a href="{% url 'add_transaction' %}" class="btn btn-primary">Add Transaction</a>
                 </div>
                 <div class="col-md-6">
-                    <!-- Payment History Card -->
+                    <!-- Transaction History Card -->
                     <div class="card">
                         <div class="card-header">
-                            <strong>Payment History</strong>
+                            <strong>Transaction History</strong>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -83,20 +88,54 @@
                                     <thead class="thead-light">
                                         <tr>
                                             <th>Date</th>
-                                            <th>Amount</th>
-                                            <th>Currency</th>
+                                            <th>Outstanding Balance</th>
+                                            <th>Amount Paid</th>
+                                            <th>Converted Amount</th>
+                                            <th>Exchange Rate</th>
+                                            <th>Remaining Balance</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {% for transaction in debtor.transaction_set.all %}
                                             <tr>
                                                 <td>{{ transaction.date }}</td>
-                                                <td>{{ transaction.amount }}</td>
-                                                <td>{{ transaction.currency }}</td>
+                                                <td>
+                                                    {% if forloop.first %}
+                                                        {{ debtor.initial_balance }} {{ debtor.debt_currency }}
+                                                    {% else %}
+                                                        {{ transaction.outstanding_balance_before }} {{ debtor.debt_currency }}
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ transaction.amount }} {{ transaction.currency }}</td>
+                                                <td>
+                                                    {% if transaction.converted_amount is not None %}
+                                                        {{ transaction.converted_amount }} {{ debtor.debt_currency }}
+                                                    {% else %}
+                                                        -
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if transaction.currency != debtor.debt_currency %}
+                                                        {{ transaction.exchange_rate }} (1 {{ transaction.currency }} = {{ transaction.exchange_rate }} {{ debtor.debt_currency }})
+                                                    {% else %}
+                                                        -
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if forloop.first %}
+                                                        {{ debtor.get_remaining_balance }} {{ debtor.debt_currency }}
+                                                    {% else %}
+                                                        {% if transaction.remaining_balance is not None %}
+                                                            {{ transaction.remaining_balance }} {{ debtor.debt_currency }}
+                                                        {% else %}
+                                                            -
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </td>
                                             </tr>
                                         {% empty %}
                                             <tr>
-                                                <td colspan="3">No payment history available.</td>
+                                                <td colspan="6">No Transaction history available.</td>
                                             </tr>
                                         {% endfor %}
                                     </tbody>

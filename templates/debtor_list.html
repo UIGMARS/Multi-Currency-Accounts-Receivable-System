@@ -36,6 +36,7 @@
             <th class="text-center"><i class="fa fa-users"></i></th>
             <th>Name</th>
             <th>Contact Details</th>
+            <th>Currency</th>
             <th>Outstanding Balance</th>
             <th>Actions</th>
           </tr>
@@ -59,6 +60,7 @@
                 <li>Notes: {{ debtor.notes | truncatechars:30 }}</li> <!-- Adjust the number of characters to truncate -->
               </ul>
             </td>
+            <td>{{ debtor.debt_currency }}</td> <!-- Display currency -->
             <td>{{ debtor.get_remaining_balance }}</td>
             <td>
               <!-- Actions buttons -->
@@ -76,7 +78,7 @@
           {% empty %}
           <!-- Message for no debtors found -->
           <tr>
-            <td colspan="5">No debtors found.</td>
+            <td colspan="6">No debtors found.</td>
           </tr>
           {% endfor %}
         </tbody>

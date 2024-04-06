@@ -6,6 +6,7 @@ from django.conf.urls import handler404
 from base.views import page_not_found
 from base.views import generate_receipt_pdf
 from base.views import outstanding_debt_summary, detailed_transaction_history
+from base.views import debtor_detail
 
 urlpatterns = [ 
     path('login/', views.login_view, name='login'),
@@ -13,7 +14,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path ('', views.index, name='index'),
     path ('index', views.index, name='index'),
-    path ('debtor-detail', views.debtor_detail, name='debtor_detail'),
+    # path ('debtor-detail', views.debtor_detail, name='debtor_detail'),
+    path('debtor-detail/<str:debtor_id>/', views.debtor_detail, name='debtor_detail'),
+    # path ('debtor-detail/<str:unique_id>/', debtor_detail, name='debtor_detail'),
     path ('debtor-list', views.debtor_list, name='debtor_list'),
     path('transaction-detail/<int:pk>/', views.transaction_detail, name='transaction_detail'),
     path ('dashboard', views.dashboard, name='dashboard'),

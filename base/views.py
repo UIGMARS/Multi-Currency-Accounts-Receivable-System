@@ -1,29 +1,32 @@
 # Imports
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth import authenticate, login, logout
-from debt_tracker.models import Debtor, Transaction
-from debt_tracker.forms import DebtorForm, TransactionForm
-from django.db.models import Sum
-import uuid
-from django.conf import settings
-from django.http import HttpResponseNotFound, FileResponse, JsonResponse, HttpResponse
 import os
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import letter
-from num2words import num2words
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.lib import colors
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle, Spacer
+from decimal import Decimal
 from io import BytesIO
-from reportlab.lib.units import inch
-from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
-from django.templatetags.static import static
-from PyPDF2 import PdfWriter
+
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.serializers import serialize
 from django.core import serializers
+from django.db.models import Sum
 from django.forms.models import ModelChoiceField
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import HttpResponseNotFound, FileResponse, JsonResponse, HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect
+from django.templatetags.static import static
+
+from reportlab.lib.pagesizes import letter
+from reportlab.lib import colors
+from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle, Spacer
+from reportlab.pdfgen import canvas
+from PyPDF2 import PdfWriter
+from num2words import num2words
+
+from debt_tracker.models import Debtor, Transaction
+from debt_tracker.forms import DebtorForm, TransactionForm
+
 
 
 
@@ -59,13 +62,27 @@ def index(request):
     return render(request, 'index.html')
 
 @login_required
-def debtor_detail(request, unique_id):
-    debtor = get_object_or_404(Debtor, unique_id=unique_id)
-    return render(request, 'debtor_detail.html', {'debtor': debtor})
+def debtor_detail(request, debtor_id):
+    debtor = get_object_or_404(Debtor, unique_id=debtor_id)
+    transactions = debtor.transaction_set.all()
 
+    # Initialize transaction form with debtor's initial balance
+    initial_balance = debtor.get_remaining_balance()
+    form = TransactionForm(initial={'outstanding_balance_before': initial_balance, 'remaining_balance': initial_balance})
+
+    context = {
+        'debtor': debtor,
+        'transactions': transactions,
+        'form': form,
+    }
+
+    return render(request, 'debtor_detail.html', context)
+
+
+@login_required
 def debtor_list(request):
     debtors_list = Debtor.objects.all()
-    paginator = Paginator(debtors_list, 5)  # Show 10 debtors per page
+    paginator = Paginator(debtors_list, 10)  # Show 10 debtors per page
 
     page_number = request.GET.get('page')
     try:
@@ -106,7 +123,7 @@ def transaction_list(request):
             transactions = transactions.filter(currency__icontains=filter_input)
 
     # Pagination
-    paginator = Paginator(transactions, 5)  # Show 5 transactions per page
+    paginator = Paginator(transactions, 10)  # Show 10 transactions per page
     page = request.GET.get('page')
 
     try:
@@ -242,32 +259,31 @@ def get_debtors(request):
 # === Transaction Related Views ===
 # ========================================
 
+@login_required
 def add_transaction(request):
     if request.method == 'POST':
         form = TransactionForm(request.POST, request.FILES)
         if form.is_valid():
-            print(form.cleaned_data)  # Print form data for inspection
-            form.save()  # Save the form data
+            form.save()
             return redirect('transaction_list')  # Redirect to transaction list after successful addition
-        else:
-            print(form.errors)  # Print form errors for debugging
     else:
-        # Fetch all debtors
-        debtors = Debtor.objects.all()
-        # Remove the 'debtor' field from the form
         form = TransactionForm()
-        # Dynamically add the 'debtor' field to the form
-        form.fields['debtor'] = ModelChoiceField(queryset=debtors)
 
     return render(request, 'add_transaction.html', {'form': form})
 
 
+@login_required
 def edit_transaction(request, pk):
     transaction = get_object_or_404(Transaction, pk=pk)
     if request.method == 'POST':
         form = TransactionForm(request.POST, instance=transaction)
         if form.is_valid():
-            form.save()
+            transaction = form.save(commit=False)  # Save the form data without committing to the database
+            if transaction.currency != transaction.debtor.debt_currency:
+                # Convert amount to debtor's debt currency
+                converted_amount = transaction.amount * transaction.exchange_rate
+                transaction.amount = converted_amount
+            form.save()  # Save the transaction
             return redirect('transaction_list')  # Redirect after successful edit
     else:
         form = TransactionForm(instance=transaction)
@@ -372,17 +388,27 @@ def generate_receipt_pdf(request, unique_id):
         Spacer(1, 12),
     ]
 
-    # Convert transaction amount to words
-    amount_in_words = num2words(transaction.amount, lang='en').title()  # Convert amount to title case
-    amount_in_words = f"{amount_in_words} {transaction.get_currency_display()} Only"  # Add currency and 'Only'
+    # Convert transaction amount to debtor's debt currency if necessary
+    if transaction.currency != transaction.debtor.debt_currency:
+        converted_amount = transaction.amount * transaction.exchange_rate
+        exchange_rate = transaction.exchange_rate
+        original_currency = transaction.get_currency_display()
+        converted_currency = transaction.debtor.get_debt_currency_display()
+    else:
+        converted_amount = transaction.amount
+        exchange_rate = 1.0  # Set exchange rate to 1.0 if currencies are the same
+        original_currency = converted_currency = transaction.get_currency_display()
 
     # Create receipt table data
     receipt_table_data = [
         ["", ""],
-        ["Amount in words:", amount_in_words],
+        ["Amount in words:", num2words(converted_amount, lang='en').title() + f' {converted_currency} Only'],
         ["Received from:", transaction.debtor.name],
         ["Amount:", str(transaction.amount)],
-        ["Currency:", transaction.get_currency_display()],
+        ["Currency:", original_currency],
+        ["Converted Amount:", str(converted_amount)],
+        ["Converted Currency:", converted_currency],
+        ["Exchange Rate:", str(exchange_rate)],
         ["Description:", transaction.description],
         # Add additional content here as needed
     ]
